@@ -80,13 +80,14 @@
 									</ul>
 								</li>
 								-->
-								<li><a href="services.html">Servicios</a></li>
+								<!--<li><a href="">Servicios</a></li>-->
+								<li><a href="#servicios">Servicios</a></li>
 								<!--
 								<li><a href="blog.html">Blog</a></li>
 								-->
-								<li><a href="about.html">Nosotros</a></li>
-								<li><a href="contact.html">Contáctenos</a></li>
-								<li class="btn-cta"><a href="#">Registrese</a></li>
+								<li><a href="#pricing">Planes y precios</a></li>
+								<li><a href="{% url 'contact_page' %}">Contáctenos</a></li>
+								<li class="btn-cta"><a href="#">Regístrese</a></li>
 								<li class="btn-cta"><a href="#">Ingresar</a></li>
 							</ul>
 						</div>
@@ -133,10 +134,12 @@
 		</aside>
 
 		<div id="colorlib-services">
+			<a name="servicios"></a>
 			<div class="container">
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2 text-center colorlib-heading animate-box">
 						<h2>¿Como funciona?</h2>
+						
 						<p>Con ORION su empresa estará más cerca de miles de oportunidades de negocio con el estado colombiano.</p>
 					</div>
 				</div>
@@ -414,6 +417,7 @@
 		-->
 
 		<div id="colorlib-pricing">
+			<a name="pricing"></a>
 			<div class="container">
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2 text-center colorlib-heading animate-box">
@@ -507,8 +511,7 @@
 					<div class="col-md-4 colorlib-widget">
 						<h4>Información</h4>
 						<p>
-							<ul class="colorlib-footer-links">
-								<li><a href="#"><i class="icon-check"></i> Nosotros</a></li>
+							<ul class="colorlib-footer-links">								
 								<!--
 								<li><a href="#"><i class="icon-check"></i> Privacy</a></li>
 								-->
