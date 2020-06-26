@@ -8,3 +8,6 @@ def landingView(request):
 
 def contactView(request):
     return render(request, 'contact.html')
+
+def welcomeView(request):
+    return render(request, 'welcome.html')
