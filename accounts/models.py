@@ -1,3 +1,45 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
+
+
+class Usuario(AbstractUser):
+    # Tipos de documento validos
+    # 0 - CC (Cedula)
+    # 1 - CE (Cedula extranjeria)
+    # 2 - PA (Pasaporte)
+
+    tipo_documento = models.CharField(null=False, blank=False, max_length=3)
+    num_documento = models.CharField(null=False, blank=False, max_length=20)
+    modified_at = models.DateTimeField(auto_now=True)
+    celular = models.CharField(null=False, blank=False, max_length=30)
+
+    class Meta:
+        verbose_name = 'usuario'
+        verbose_name_plural = 'usuarios'        
+
+    def __str__(self):
+        return self.last_name + ' - ' + self.num_documento
+
+
+class CodUNSPSC(models.Model):
+    # Modelo para almacenar los codigos de las actividades economicas
+    codigo = models.CharField(null=False, blank=False, max_length=10)
+
+
+class Ciudad(models.Model):
+    # Modelo para almacenar ciudades de operacion
+    ciudad = models.CharField(null=False, blank=False, max_length=20)
+
+
+class Perfil(models.Model):
+    usuario = models.OneToOneField(Usuario, on_delete=models.CASCADE)
+    nit = models.CharField(null=False, blank=False, max_length=15)
+    nom_empresa = models.CharField(max_length=150, null=False, blank=False)
+    telefono = models.CharField(max_length=30)  # opcional
+    activ_economica = models.ManyToManyField(
+        CodUNSPSC, related_name='actividades_economicas')
+    presupuesto_min = models.DecimalField(max_digits=52, decimal_places=2)
+    presupuesto_max = models.DecimalField(max_digits=52, decimal_places=2)
+    ciudad = models.ManyToManyField(Ciudad, related_name='ciudades')
