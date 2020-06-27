@@ -17,7 +17,7 @@ class Usuario(AbstractUser):
 
     class Meta:
         verbose_name = 'usuario'
-        verbose_name_plural = 'usuarios'        
+        verbose_name_plural = 'usuarios'
 
     def __str__(self):
         return self.last_name + ' - ' + self.num_documento
@@ -35,11 +35,13 @@ class Ciudad(models.Model):
 
 class Perfil(models.Model):
     usuario = models.OneToOneField(Usuario, on_delete=models.CASCADE)
-    nit = models.CharField(null=False, blank=False, max_length=15)
-    nom_empresa = models.CharField(max_length=150, null=False, blank=False)
-    telefono = models.CharField(max_length=30)  # opcional
+    nit = models.CharField(max_length=15, null=True)
+    nom_empresa = models.CharField(max_length=150, null=True)
+    telefono = models.CharField(max_length=30, null=True)
     activ_economica = models.ManyToManyField(
         CodUNSPSC, related_name='actividades_economicas')
-    presupuesto_min = models.DecimalField(max_digits=52, decimal_places=2)
-    presupuesto_max = models.DecimalField(max_digits=52, decimal_places=2)
+    presupuesto_min = models.DecimalField(
+        max_digits=52, decimal_places=2, null=True)
+    presupuesto_max = models.DecimalField(
+        max_digits=52, decimal_places=2, null=True)
     ciudad = models.ManyToManyField(Ciudad, related_name='ciudades')
