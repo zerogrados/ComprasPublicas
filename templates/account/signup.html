@@ -1,7 +1,13 @@
+{% extends "account/base.html" %}
+
+{% block head_content %}
 <title>Regístrese</title>
+{% endblock %}
 
 {% block container %}
-
+<div class="col-md-8 col-md-offset-2 text-center">
+    <h3  style="margin-top: 2rem; margin-bottom: 2rem;">LICIORION</h3>
+</div>
 <form method="POST" action="{% url 'registro' %}">
     {% csrf_token %}
 
@@ -14,19 +20,16 @@
         <input class="form-control" type="text" name="last_name" placeholder="Apellidos" required="true"
             id="id_first_name">
     </div>
-    
-    <div class="form-group">
-        <span>
-            <select class="form-control" name="tipo_documento" id="tipo_documento">
+
+    <div style="margin-bottom: 0.5rem;" class="input-group">
+            <select style="height: auto;" class="form-control" name="tipo_documento" id="tipo_documento">
                 <option value="CC">CC</option>
                 <option value="CE">CE</option>
                 <option value="PA">PA</option>
             </select>
-        </span>
-        <span>
+        <span class="input-group-addon">-</span>
             <input class="form-control" type="texto" name="num_documento" placeholder="Número de documento" required="true"
                 id="id_first_name">
-        </span>
     </div>
 
     <div class="form-group">
@@ -45,11 +48,13 @@
     </div>
 
     <div class="form-group">
-        <input class="form-control" type="password" name="password2" placeholder="Contraseña" required="true"
+        <input class="form-control" type="password" name="password2" placeholder="Confirme su contraseña" required="true"
             id="id_password2">
     </div>
 
     <button class="btn btn-primary btn-block mt-5" type="submit">Regístrese</button>
+
+    <p style="text-align: center;">¿Tiene una cuenta? <a href="{% url 'account_login' %}">Inicie sesión</a></p>
 
 </form>
 
