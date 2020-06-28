@@ -76,8 +76,12 @@
 								</li>
 								<li><a href="#pricing">Planes y precios</a></li>
 								<li><a href="{% url 'contact_page' %}">Contáctenos</a></li>
+							{% if user.is_authenticated %}
+								<li class="btn-cta"><a href="{% url 'account_logout' %}">Cerrar sesión</a></li>
+							{% else %}
 								<li class="btn-cta"><a href="{% url 'account_signup' %}">Regístrese</a></li>
 								<li class="btn-cta"><a href="{% url 'account_login' %}">Ingresar</a></li>
+							{% endif %}
 							</ul>
 						</div>
 					</div>
