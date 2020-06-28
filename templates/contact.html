@@ -87,9 +87,9 @@
 								<li class="active"><a href="contact.html">Contact</a></li>
 							-->
 							{% if user.is_authenticated %}
-								<li class="btn-cta"><a href="{% url 'account_logout' %}">Cerrar sesión</a></li>
+								<li class="btn-cta"><a href="{% url 'cerrar_sesion' %}">Cerrar sesión</a></li>
 							{% else %}
-								<li class="btn-cta"><a href="{% url 'account_signup' %}">Regístrese</a></li>
+								<li class="btn-cta"><a href="{% url 'registro' %}">Regístrese</a></li>
 								<li class="btn-cta"><a href="{% url 'account_login' %}">Ingresar</a></li>
 							{% endif %}
 							</ul>
