@@ -10,8 +10,8 @@ class Usuario(AbstractUser):
     # 1 - CE (Cedula extranjeria)
     # 2 - PA (Pasaporte)
 
-    tipo_documento = models.CharField(null=False, blank=False, max_length=3)
-    num_documento = models.CharField(null=False, blank=False, max_length=20)
+    tipo_documento = models.CharField(null=True, blank=True, max_length=3)
+    num_documento = models.CharField(null=True, blank=True, max_length=20)
     modified_at = models.DateTimeField(auto_now=True)
     celular = models.CharField(null=False, blank=False, max_length=30)
 

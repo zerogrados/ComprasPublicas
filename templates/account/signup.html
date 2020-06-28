@@ -5,66 +5,94 @@
 {% endblock %}
 
 {% block container %}
-<div class="col-md-8 col-md-offset-2 text-center">
-    <h3  style="margin-top: 2rem; margin-bottom: 2rem;">LICIORION</h3>
-</div>
-<form method="POST" action="{% url 'registro' %}">
-    {% csrf_token %}
+<form class="login100-form validate-form" method="POST" action="{% url 'registro' %}">
+    {% csrf_token %}  
+    <span class="login100-form-title">
+        <a style="padding-bottom: 0px" class="login100-form-title" href="{% url 'home_page' %}">LICIORION</a>
+    </span>
 
-    <div class="form-group">
-        <input class="form-control" type="text" name="first_name" placeholder="Nombres" autofocus="autofocus"
-            required="true" id="id_first_name">
+    <div class="wrap-input100 validate-input" data-validate="Nombres es obligatorio">
+        <input class="input100" type="text" name="first_name" placeholder="Nombres" id="id_first_name">
+        <span class="focus-input100"></span>
+        <span class="symbol-input100">
+            <i class="fa fa-user" aria-hidden="true"></i>
+        </span>
     </div>
 
-    <div class="form-group">
-        <input class="form-control" type="text" name="last_name" placeholder="Apellidos" required="true"
-            id="id_first_name">
+    <div class="wrap-input100 validate-input" data-validate="Apellidos es obligatorio">
+        <input class="input100" type="text" name="last_name" placeholder="Apellidos" id="id_last_name">
+        <span class="focus-input100"></span>
+        <span class="symbol-input100">
+            <i class="fa fa-user" aria-hidden="true"></i>
+        </span>
+    </div>
+    <!--
+    <div class="wrap-input100 validate-input" data-validate="Tipo de documento es obligatorio">
+        <select class="input100" name="tipo_documento" id="tipo_documento">
+            <option value="CC">CC</option>
+            <option value="CE">CE</option>
+            <option value="PA">PA</option>
+        </select>
+        <span class="focus-input100"></span>
+        <span class="symbol-input100">
+            <i class="fa fa-envelope" aria-hidden="true"></i>
+        </span>
     </div>
 
-    <div style="margin-bottom: 0.5rem;" class="input-group">
-            <select style="height: auto;" class="form-control" name="tipo_documento" id="tipo_documento">
-                <option value="CC">CC</option>
-                <option value="CE">CE</option>
-                <option value="PA">PA</option>
-            </select>
-            <span class="input-group-addon">-</span>
-            <input class="form-control" type="texto" name="num_documento" placeholder="Número de documento" required="true"
-                id="id_first_name">
+    <div class="wrap-input100 validate-input" data-validate="Número de documento es obligatorio">
+        <input class="input100" type="text" name="num_documento" placeholder="Número de documento" id="id_num_documento">
+        <span class="focus-input100"></span>
+        <span class="symbol-input100">
+            <i class="fa fa-envelope" aria-hidden="true"></i>
+        </span>
+    </div>
+    -->
+    <div class="wrap-input100 validate-input" data-validate="Celular es obligatorio">
+        <input class="input100" type="tel" name="celular" placeholder="Celular" id="id_celular">
+        <span class="focus-input100"></span>
+        <span class="symbol-input100">
+            <i class="fa fa-phone" aria-hidden="true"></i>
+        </span>
     </div>
 
-    <div class="form-group">
-        <input class="form-control" type="tel" name="celular" placeholder="Celular" required="true"
-            id="celular">
+    <div class="wrap-input100 validate-input" data-validate="Correo electrónico es obligatorio">
+        <input class="input100" type="email" name="email" placeholder="Email" id="id_email">
+        <span class="focus-input100"></span>
+        <span class="symbol-input100">
+            <i class="fa fa-envelope" aria-hidden="true"></i>
+        </span>
     </div>
 
-    <div class="form-group">
-        <input class="form-control" type="email" name="email" placeholder="Correo electrónico" required="true"
-            id="id_email" />
+    <div class="wrap-input100 validate-input" data-validate="Contraseña es obligatoria">
+        <input class="input100" type="password" name="password1" placeholder="Contraseña" id="id_password1">
+        <span class="focus-input100"></span>
+        <span class="symbol-input100">
+            <i class="fa fa-lock" aria-hidden="true"></i>
+        </span>
     </div>
 
-    <div class="form-group">
-        <input class="form-control" type="password" name="password1" placeholder="Contraseña" required="true"
-            id="id_password1">
+    <div class="wrap-input100 validate-input" data-validate="Confirme su contraseña es obligatoria">
+        <input class="input100" type="password" name="password2" placeholder="Confirme su contraseña" id="id_password2">
+        <span class="focus-input100"></span>
+        <span class="symbol-input100">
+            <i class="fa fa-lock" aria-hidden="true"></i>
+        </span>
+    </div>  
+
+    <div class="container-login100-form-btn">
+        <button type="submit" class="login100-form-btn">
+            Registrarse
+        </button>
     </div>
 
-    <div class="form-group">
-        <input class="form-control" type="password" name="password2" placeholder="Confirme su contraseña" required="true"
-            id="id_password2">
+    <div class="text-center p-t-12">
+        <span class="txt1">
+            ¿Ya tiene cuenta?
+        </span>
+        <a class="txt2" href="{% url 'account_login' %}">
+            Ingrese aquí
+        </a>
     </div>
-
-    <button class="btn btn-primary btn-block mt-5" type="submit">Regístrese</button>
-
-    <p style="text-align: center;">¿Tiene una cuenta? <a href="{% url 'account_login' %}">Inicie sesión</a></p>
-
 </form>
-
-<!--
-    <h2>Sign Up</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Sign Up</button>
-</form>
--->
 
 {% endblock %}

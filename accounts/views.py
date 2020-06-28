@@ -29,8 +29,8 @@ def creaUsuarioView(request):
 
         user.first_name = request.POST['first_name']
         user.last_name = request.POST['last_name']
-        user.tipo_documento = request.POST['tipo_documento']
-        user.num_documento = request.POST['num_documento']
+        #user.tipo_documento = request.POST['tipo_documento']
+        #user.num_documento = request.POST['num_documento']
         user.celular = request.POST['celular']
         user.save()
 
