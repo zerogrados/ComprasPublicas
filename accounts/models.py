@@ -1,19 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
+from phonenumber_field.modelfields import PhoneNumberField
 # Create your models here.
 
 
 class Usuario(AbstractUser):
-    # Tipos de documento validos
-    # 0 - CC (Cedula)
-    # 1 - CE (Cedula extranjeria)
-    # 2 - PA (Pasaporte)
 
     tipo_documento = models.CharField(null=True, blank=True, max_length=3)
     num_documento = models.CharField(null=True, blank=True, max_length=20)
     modified_at = models.DateTimeField(auto_now=True)
-    celular = models.CharField(null=False, blank=False, max_length=30)
+    celular = PhoneNumberField(null=False, blank=False, region='CO')
 
     class Meta:
         verbose_name = 'usuario'
