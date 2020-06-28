@@ -43,9 +43,9 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-
+    'phonenumber_field',
     # 'landingPage',
-    'accounts'
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -118,9 +118,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-CO'
 
-TIME_ZONE = 'UTC'
+PHONENUMBER_DB_FORMAT = 'INTERNATIONAL'
+
+PHONENUMBER_DEFAULT_REGION = "CO"
+
+TIME_ZONE = 'America/Bogota'
 
 USE_I18N = True
 

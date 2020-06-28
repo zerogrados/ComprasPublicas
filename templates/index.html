@@ -67,17 +67,21 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-md-2 text-center">
-							<div id="colorlib-logo"><a href="index.html">LICIORION</a></div>
+							<div id="colorlib-logo"><a href="{% url 'home_page' %}">LICIORION</a></div>
 						</div>
 						<div class="col-md-10 text-right menu-1">
 							<ul>
-								<li class="active"><a href="index.html">Inicio</a></li>
+								<li class="active"><a href="{% url 'home_page' %}">Inicio</a></li>
 								<li><a href="#servicios">Servicios</a>
 								</li>
 								<li><a href="#pricing">Planes y precios</a></li>
 								<li><a href="{% url 'contact_page' %}">Contáctenos</a></li>
-								<li class="btn-cta"><a href="{% url 'account_signup' %}">Regístrese</a></li>
+							{% if user.is_authenticated %}
+								<li class="btn-cta"><a href="{% url 'cerrar_sesion' %}">Cerrar sesión</a></li>
+							{% else %}
+								<li class="btn-cta"><a href="{% url 'registro' %}">Regístrese</a></li>
 								<li class="btn-cta"><a href="{% url 'account_login' %}">Ingresar</a></li>
+							{% endif %}
 							</ul>
 						</div>
 					</div>
@@ -128,7 +132,7 @@
 					<div class="col-md-8 col-md-offset-2 text-center colorlib-heading animate-box">
 						<h2>¿Como funciona?</h2>
 
-						<p>Con ORION su empresa estará más cerca de miles de oportunidades de negocio con el estado
+						<p>Con LICIORION su empresa estará más cerca de miles de oportunidades de negocio con el estado
 							colombiano.</p>
 					</div>
 				</div>
