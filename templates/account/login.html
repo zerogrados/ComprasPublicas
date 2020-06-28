@@ -5,27 +5,52 @@
 {% endblock %}
 
 {% block container %}
-    <div class="col-md-8 col-md-offset-2 text-center">
-        <h3 style="margin-top: 2rem; margin-bottom: 4rem;">LICIORION</h3>
-    </div>
+    <form class="login100-form validate-form" method="POST" action="{% url 'account_login' %}">
+        {% csrf_token %}  
+        <span class="login100-form-title">
+            <a style="padding-bottom: 0px" class="login100-form-title" href="{% url 'home_page' %}">LICIORION</a>
+        </span>
 
-    <form method="POST" action="{% url 'account_login' %}">
-        {% csrf_token %}    
-    
-        <div class="form-group">            
-            <input class="form-control" type="email" name="login" placeholder="Correo electrónico" autofocus="autofocus" required="true" id="id_login" />
+        <div class="wrap-input100 validate-input" data-validate="Email es obligatorio: ex@abc.xyz">
+            <input class="input100" type="text" name="login" placeholder="Email">
+            <span class="focus-input100"></span>
+            <span class="symbol-input100">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+            </span>
         </div>
-    
-        <div class="form-group">            
-            <input class="form-control" type="password" name="password" placeholder="Contraseña" required="true" id="id_password">
+
+        <div class="wrap-input100 validate-input" data-validate = "Contraseña es obligatoria">
+            <input class="input100" type="password" name="password" placeholder="Contraseña">
+            <span class="focus-input100"></span>
+            <span class="symbol-input100">
+                <i class="fa fa-lock" aria-hidden="true"></i>
+            </span>
         </div>
-    
-    
-        <button class="btn btn-primary btn-block mt-5" type="submit">Iniciar Sesión</button>
         
-        <p style="text-align: center; margin-top: 0.5 rem;"><a href="#">¿Olvidó su contraseña?</a></p>
+        <div class="container-login100-form-btn">
+            <button type="submit" class="login100-form-btn">
+                Iniciar Sesión
+            </button>
+        </div>
 
-        <p style="text-align: center; margin-top: 3 rem;">¿Todavía no tiene una cuenta? <a href="{% url 'account_signup' %}">Registrese</a></p>
+        <div class="text-center p-t-12">
+            <span class="txt1">
+                Olvidó su
+            </span>
+            <a class="txt2" href="#">
+                Contraseña?
+            </a>
+        </div>
+
+        <div class="text-center p-t-136">
+            <span class="txt1">
+                ¿Todavia no tiene una cuenta? 
+            </span></br>
+            <a class="txt2" href="#">
+                Regístrese
+                <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+            </a>
+        </div>
     </form>
     
 {% endblock %}
