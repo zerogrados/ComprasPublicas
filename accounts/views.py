@@ -3,6 +3,7 @@ from .models import Usuario, Perfil
 from django.db.utils import IntegrityError
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.sites.shortcuts import get_current_site
 # Create your views here.
 
 # Forms
@@ -10,7 +11,6 @@ from .forms import UserForm
 
 
 def creaUsuarioView(request):
-    
     if request.method == "POST":
         form = UserForm(request.POST)
         if form.is_valid():
@@ -19,7 +19,7 @@ def creaUsuarioView(request):
                     username=form.cleaned_data['email'],
                     email=form.cleaned_data['email'],
                     password=form.cleaned_data['password1']
-            )
+                )
 
             except IntegrityError:
                 return render(request, 'account/signup.html', {'error': 'Ya existe un usuario registrado con este correo', 'form': form})
@@ -36,9 +36,9 @@ def creaUsuarioView(request):
                                     )
             login(request, new_user)
             return redirect('welcome_page')
-        
+
         else:
-            
+
             try:
                 if form.errors['celular']:
                     form.errors['celular'] = 'Ingrese un teléfono valido (Ej: 3001112233)'
@@ -48,7 +48,6 @@ def creaUsuarioView(request):
     else:
         form = UserForm()
     return render(request, 'account/signup.html', {'form': form})
-
 
 
 @login_required
