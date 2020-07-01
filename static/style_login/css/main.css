@@ -146,6 +146,19 @@ iframe {
   line-height: 1.5;
   color: #666666;
 }
+.txt3 {
+  font-family: Poppins-Regular;
+  font-size: 22px;
+  line-height: 1.5;
+  color: #fff;
+}
+
+.txt4 {
+  font-family: Poppins-Regular;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #999999;
+}
 
 
 /*//////////////////////////////////////////////////////////////////

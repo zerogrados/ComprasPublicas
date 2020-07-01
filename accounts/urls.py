@@ -16,7 +16,7 @@ urlpatterns = [
     ),
         # Forget Password
     path('password_reset/',
-         auth_views.PasswordResetView.as_view(
+         views.ResetPasswordView.as_view(
              template_name='account/password_reset_form.html',
              subject_template_name='account/password_reset_subject.txt',
              email_template_name='account/password_reset_email.html',
