@@ -4,10 +4,10 @@ from . import views
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path('registro/', views.creaUsuarioView, name='registro'),
-    path('cerrar_sesion/', views.logoutView, name='cerrar_sesion'),
+    path('signup_form/', views.creaUsuarioView, name='registro'),
+    path('logout/', views.logoutView, name='cerrar_sesion'),
     path(
-        'change-password/',
+        'change_password/',
         auth_views.PasswordChangeView.as_view(
             template_name='account/change_password.html',
             success_url = '/'
@@ -20,6 +20,7 @@ urlpatterns = [
              template_name='account/password_reset_form.html',
              subject_template_name='account/password_reset_subject.txt',
              email_template_name='account/password_reset_email.html',
+             html_email_template_name='account/password_reset_email.html'
              # success_url='/login/'
          ),
          name='password_reset'),
