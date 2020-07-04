@@ -7,6 +7,10 @@ verify_ssl = true
 
 [packages]
 django = "*"
+psycopg2-binary = "*"
+django-allauth = "*"
+django-phonenumber-field = {extras = ["phonenumbers"], version = "*"}
+phonenumbers = "*"
 
 [requires]
 python_version = "3.8"
