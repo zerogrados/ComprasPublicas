@@ -5,13 +5,14 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth import views as auth_views
+
 # Create your views here.
 
 # Forms
 from .forms import UserForm
 
 
-def creaUsuarioView(request):
+def createUserView(request):
     if request.method == "POST":
         form = UserForm(request.POST)
         if form.is_valid():
@@ -57,6 +58,7 @@ def logoutView(request):
     logout(request)
     return redirect('home_page')
 
+
 class ResetPasswordView(auth_views.PasswordResetView):
     def form_valid(self, form):
         usuario = None
@@ -78,8 +80,7 @@ class ResetPasswordView(auth_views.PasswordResetView):
             }
             form.save(**opts)
             return super().form_valid(form)
-        
+
         else:
             form.errors['email'] = 'No existe un usuario con el correo ingresado'
             return render(self.request, 'account/password_reset_form.html', {'form': form})
-            
