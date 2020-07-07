@@ -11,6 +11,19 @@ from django.contrib.auth import views as auth_views
 # Forms
 from .forms import UserForm
 
+def loginView(request):
+    if request.method == 'POST':
+        try:
+            user = authenticate(email=request.POST['login'],
+                            password=request.POST['password'],
+            )
+            login(request, user)
+            return redirect('welcome_page')
+        except:
+            return render(request, 'account/login.html', {'error': 'Usuario o contraseña incorrectos'})
+    else:
+        return render(request, 'account/login.html')
+
 
 def createUserView(request):
     if request.method == "POST":
@@ -72,13 +85,11 @@ class ResetPasswordView(auth_views.PasswordResetView):
                 'use_https': self.request.is_secure(),
                 'token_generator': self.token_generator,
                 'from_email': self.from_email,
-                'email_template_name': self.email_template_name,
                 'subject_template_name': self.subject_template_name,
                 'request': self.request,
                 'html_email_template_name': self.html_email_template_name,
                 'extra_email_context': self.extra_email_context,
             }
-            form.save(**opts)
             return super().form_valid(form)
 
         else:
