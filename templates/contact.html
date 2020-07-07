@@ -75,7 +75,7 @@
 								<li class="btn-cta"><a href="{% url 'cerrar_sesion' %}">Cerrar sesión</a></li>
 							{% else %}
 								<li class="btn-cta"><a href="{% url 'registro' %}">Regístrese</a></li>
-								<li class="btn-cta"><a href="{% url 'account_login' %}">Ingresar</a></li>
+								<li class="btn-cta"><a href="{% url 'login' %}">Ingresar</a></li>
 							{% endif %}
 							</ul>
 						</div>
@@ -113,13 +113,14 @@
 										<p><span><i class="icon-phone3"></i></span> <a href="tel://1234567920">+ 1235
 												2355 98</a></p>
 									</div>
-									-->
+									
 									<div class="con-info">
 										<p><span><i class="icon-paperplane"></i></span> <a
 												href="mailto:info@yoursite.com">info@yoursite.com</a></p>
 									</div>
+									-->
 									<div class="con-info">
-										<p><span><i class="icon-globe"></i></span> <a href="#">yourwebsite.com</a></p>
+										<p><span><i class="icon-globe"></i></span> <a href="https://liciorion.com">liciorion.com</a></p>
 									</div>
 								</div>
 							</div>
@@ -133,28 +134,28 @@
 							<div class="row form-group">
 								<div class="col-md-6">
 									<!-- <label for="fname">First Name</label> -->
-									<input type="text" id="fname" name="full_name" class="form-control" placeholder="Nombre completo">
+									<input required="true" type="text" id="fname" name="full_name" class="form-control" placeholder="Nombre completo">
 								</div>
 							</div>
 
 							<div class="row form-group">
 								<div class="col-md-12">
 									<!-- <label for="email">Email</label> -->
-									<input type="text" id="email" name="email" class="form-control" placeholder="Correo electrónico">
+									<input required="true" type="email" id="email" name="email" class="form-control" placeholder="Correo electrónico">
 								</div>
 							</div>
 
 							<div class="row form-group">
 								<div class="col-md-12">
 									<!-- <label for="subject">Subject</label> -->
-									<input type="text" id="subject" name="subject" class="form-control" placeholder="Asunto">
+									<input required="true" type="text" id="subject" name="subject" class="form-control" placeholder="Asunto">
 								</div>
 							</div>
 
 							<div class="row form-group">
 								<div class="col-md-12">
 									<!-- <label for="message">Message</label> -->
-									<textarea name="message" id="message" name="message" cols="30" rows="10" class="form-control"
+									<textarea required="true" name="message" id="message" name="message" cols="30" rows="10" class="form-control"
 										placeholder="Escriba su inquietud aquí"></textarea>
 								</div>
 							</div>
@@ -207,9 +208,11 @@
 					<div class="col-md-4 colorlib-widget">
 						<h4>Información de contacto</h4>
 						<ul class="colorlib-footer-links">
+							<!--
 							<li><a href="mailto:info@yoursite.com"><i class="icon-envelope"></i> info@yoursite.com</a>
 							</li>
-							<li><a href="http://luxehotel.com"><i class="icon-location4"></i> yourwebsite.com</a></li>
+							-->
+							<li><a href="https://liciorion.com"><i class="icon-location4"></i> liciorion.com</a></li>
 						</ul>
 					</div>
 				</div>

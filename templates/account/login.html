@@ -6,7 +6,7 @@
 
 {% block container %}
 
-    <form class="login100-form validate-form" method="POST" action="{% url 'account_login' %}">
+    <form class="login100-form validate-form" method="POST" action="{% url 'login' %}">
         {% csrf_token %}  
         <span class="login100-form-title">
             <a style="padding-bottom: 0px" class="login100-form-title" href="{% url 'home_page' %}">LICIORION</a>

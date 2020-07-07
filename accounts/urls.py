@@ -5,7 +5,8 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('signup_form/', views.createUserView, name='registro'),
-    path('logout/', views.logoutView, name='cerrar_sesion'),
+    path('login/', views.loginView, name='login'),
+    path('logout_/', views.logoutView, name='cerrar_sesion'),
     path(
         'change_password/',
         auth_views.PasswordChangeView.as_view(
