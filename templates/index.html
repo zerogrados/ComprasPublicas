@@ -55,6 +55,13 @@
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
 
+	<script>
+	function remove_offcanvas(){
+		$('body').removeClass('offcanvas');
+		$('.js-colorlib-nav-toggle').removeClass('active');
+	}
+	</script>
+
 </head>
 
 <body>
@@ -72,9 +79,9 @@
 						<div class="col-md-10 text-right menu-1">
 							<ul>
 								<li class="active"><a href="{% url 'home_page' %}">Inicio</a></li>
-								<li><a href="#servicios">Servicios</a>
+								<li><a href="#services" onclick="remove_offcanvas()">Servicios</a>
 								</li>
-								<li><a href="#pricing">Planes y precios</a></li>
+								<li><a href="#pricing" onclick="remove_offcanvas()">Planes y precios</a></li>
 								<li><a href="{% url 'contact_page' %}">Contáctenos</a></li>
 							{% if user.is_authenticated %}
 								<li class="btn-cta"><a href="{% url 'cerrar_sesion' %}">Cerrar sesión</a></li>
@@ -125,14 +132,13 @@
 			</div>
 		</aside>
 
-		<div id="colorlib-services">
-			<a name="servicios"></a>
+		<div id="services">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2 text-center colorlib-heading animate-box">
 						<h2>¿Como funciona?</h2>
 
-						<p>Con LICIORION su empresa estará más cerca de miles de oportunidades de negocio con el estado
+						<p>Con LICIORION su empresa estará más cerca de miles de oportunidades de negocio con el Estado
 							colombiano.</p>
 					</div>
 				</div>
@@ -213,8 +219,7 @@
 			</div>
 		</div>
 
-		<div id="colorlib-pricing">
-			<a name="pricing"></a>
+		<div id="pricing">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2 text-center colorlib-heading animate-box">
@@ -260,7 +265,7 @@
 				<div class="row row-pb-md">
 					<div class="col-md-4 colorlib-widget">
 						<h4>Nosotros</h4>
-						<p>Somos una <em>startup</em> que busca enlazar oportunidades de negocio del estado con las
+						<p>Somos una <em>startup</em> que busca enlazar oportunidades de negocio del Estado con las
 							empresas y promover la pluralidad de participantes en la compra pública</p>
 						<p>
 						<ul class="colorlib-social-icons">
