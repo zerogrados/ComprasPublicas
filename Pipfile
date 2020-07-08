@@ -12,6 +12,7 @@ django-allauth = "*"
 django-phonenumber-field = {extras = ["phonenumbers"], version = "*"}
 phonenumbers = "*"
 python-memcached = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.8"
