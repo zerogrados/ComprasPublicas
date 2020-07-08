@@ -195,8 +195,8 @@ if DEBUG == False:
     }
 
     # Set STATIC_ROOT
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles'),
-    
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
     SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
 
