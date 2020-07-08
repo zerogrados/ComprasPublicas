@@ -11,6 +11,7 @@ psycopg2-binary = "*"
 django-allauth = "*"
 django-phonenumber-field = {extras = ["phonenumbers"], version = "*"}
 phonenumbers = "*"
+python-memcached = "*"
 
 [requires]
 python_version = "3.8"
