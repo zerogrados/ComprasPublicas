@@ -185,8 +185,8 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER', None)
 
 # COOKIES SETTINGS
-CSRF_COOKIE_SECURE = os.environ.get('CSRF_COOKIE_SECURE', '') == 'True'
-SESSION_COOKIE_SECURE = os.environ.get('SESSION_COOKIE_SECURE', '') == 'True'
+# CSRF_COOKIE_SECURE = os.environ.get('CSRF_COOKIE_SECURE', '') == 'True'
+# SESSION_COOKIE_SECURE = os.environ.get('SESSION_COOKIE_SECURE', '') == 'True'
 
 
 # Check for CACHES in production
