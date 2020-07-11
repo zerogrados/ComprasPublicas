@@ -1,0 +1,78 @@
+{% extends "account/base.html" %}
+
+{% block head_content %}
+<title>Actividades económicas</title>
+{% endblock %}
+
+{% block container %}
+<style>
+* {
+  box-sizing: border-box;
+}
+
+
+#myInput {
+  background-position: 10px 12px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+#myUL {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#myUL li input {
+  border: 1px solid #ddd;
+  margin-top: -1px; /* Prevent double borders */
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+#myUL li input:hover:not(.header) {
+  background-color: #eee;
+}
+#container-login100 {
+    display: block;
+}
+</style>
+
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Buscar aquí" title="Type in a name">
+
+<ul style="text-aling:left;" id="myUL">
+  <li style="color: #FFF"><input value="Adele" type="checkbox">Adele</input></li>
+  <li style="color: #FFF"><input value="Agnes" type="checkbox">Agnes</input></li>
+
+  <li style="color: #FFF"><input value="Billy" type="checkbox">Billy</input></li>
+  <li style="color: #FFF"><input value="Bob" type="checkbox">Bob</input></li>
+
+  <li style="color: #FFF"><input value="Calvin" type="checkbox">Calvin</input></li>
+  <li style="color: #FFF"><input value="Christina" type="checkbox">Christina</input></li>
+  <li style="color: #FFF"><input value="Cindy" type="checkbox">Cindy</input></li>
+</ul>
+
+<script>
+function myFunction() {
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("myUL");
+    li = ul.getElementsByTagName("li");
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("input")[0];
+        txtValue = a.value;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
+}
+</script>
+
+{% endblock %}
