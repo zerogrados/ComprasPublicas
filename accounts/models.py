@@ -26,7 +26,9 @@ class CodUNSPSC(models.Model):
 
 class Ciudad(models.Model):
     # Modelo para almacenar ciudades de operacion
-    ciudad = models.CharField(null=False, blank=False, max_length=20)
+    ciudad = models.CharField(null=False, blank=False, max_length=50)
+    departamento = models.CharField(null=False, blank=False, max_length=50)
+
 
 
 class Perfil(models.Model):
