@@ -27,7 +27,7 @@ class ProfileForm(ModelForm):
     """Formulario para compllementar información empresarial"""
     nom_empresa = forms.CharField(widget=forms.TextInput(attrs={'class':'input100','placeholder':'Nombre de la Empresa'}))
     nit = forms.CharField(widget=forms.TextInput(attrs={'class':'input100','placeholder':'NIT', 'type':'number'}))    
-    telefono = PhoneNumberField(region='CO', widget=forms.NumberInput(attrs={'class':'input100','placeholder':'Teléfono'}))
+    telefono = PhoneNumberField(region='CO', widget=forms.NumberInput(attrs={'class':'input100','placeholder':'Teléfono', 'type':'tel'}))
     ciudad = forms.CharField(widget=forms.TextInput(attrs={'class':'input100','placeholder':'Ciudad(es) de operación'}))
     presupuesto_min = forms.DecimalField(widget=forms.TextInput(attrs={'class':'input100','placeholder':'Monto mínimo de contratación', 'type':'number'}))
     presupuesto_max = forms.DecimalField(widget=forms.TextInput(attrs={'class':'input100','placeholder':'Monto máximo de contratación', 'type':'number'}))

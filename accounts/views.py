@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth import views as auth_views
+from rest_framework.decorators import api_view
 
 # Create your views here.
 
@@ -66,44 +67,21 @@ def createUserView(request):
 
 
 #@login_required
-def updateProfileView(request):
-    if request.method == "PATCH":
-        form = ProfileForm(request.PATCH)
-        if form.is_valid():
-            try:
-                user = Usuario.objects.create_user(
-                    username=form.cleaned_data['email'],
-                    email=form.cleaned_data['email'],
-                    password=form.cleaned_data['password1']
-                )
-
-            except IntegrityError:
-                return render(request, 'account/profile_info.html', {'error': 'Ya existe un usuario registrado con este correo', 'form': form})
-
-            user.first_name = form.cleaned_data['first_name']
-            user.last_name = form.cleaned_data['last_name']
-            user.celular = form.cleaned_data['celular']
-            user.save()
-            profile = Perfil(usuario=user)
-            profile.save()
-            #import pdb; pdb.set_trace()
-            new_user = authenticate(email=form.cleaned_data['email'],
-                                    password=form.cleaned_data['password1'],
-                                    )
-            login(request, new_user)
-            return redirect('welcome_page')
-
-        else:
-
-            try:
-                if form.errors['celular']:
-                    form.errors['celular'] = 'Ingrese un teléfono valido (Ej: 3001112233)'
-            except:
-                pass
-            return render(request, 'account/signup.html', {'form': form})
-    else:
+@api_view(['GET', 'POST'])
+def updateProfileView(request):    
+    if request.method == 'GET':
         form = ProfileForm()
-    return render(request, 'account/profile_info.html', {'form': form})
+        return render(request, 'account/profile_info.html', {'form': form})
+
+    elif request.method == 'POST':
+        form = ProfileForm(request.POST)
+        print('Request received')
+        return render(request, 'account/profile_info.html', {'form': form})
+    
+
+
+
+    
 
 
 @login_required
