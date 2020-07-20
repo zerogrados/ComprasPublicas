@@ -6,6 +6,13 @@
                 <div class="col-md-2 text-center">
                     <div id="colorlib-logo"><a href="{% url 'home_page' %}">LICIORION</a></div>
                 </div>
+                <div class="col-md-10 text-right menu-1">
+                    <ul>
+                        {% if user.is_authenticated %}
+                            <li class="btn-cta"><a href="{% url 'cerrar_sesion' %}">Cerrar sesión</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
