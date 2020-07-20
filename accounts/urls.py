@@ -39,4 +39,7 @@ urlpatterns = [
          ),
          name='password_reset_complete'),
     path('cod/', views.cod, name="cod"),
+    
+    # PROFILE
+    path('profile_form/', views.updateProfileView, name='perfil_empresarial'),
 ]

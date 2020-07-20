@@ -1,0 +1,238 @@
+{% extends "account/base.html" %} {% block head_content %}
+<title>Complete su perfil</title>
+{% endblock %} {% block container %}
+
+<form id="profile_form" class="validate-form" method="POST" action="{% url 'perfil_empresarial' %}">
+
+    <span class="login100-form-title">
+        Información Empresarial
+    </span>
+    <!-- progressbar  <li class="completed"> <span class="bubble"></span> Step 1. </li> -->
+
+    <ul class="progress-indicator" style="margin-bottom: 2rem;">
+        <li id="step_1" class="active"> <span class="bubble"></span> Info Básica </li>
+        <li id="step_2"> <span class="bubble"></span> Info Económica </li>
+        <li id="step_3"> <span class="bubble"></span> Info Comercial </li>
+    </ul>
+
+
+
+
+    <p id="nit_error" style="display: none;" class="alert alert-danger">NIT no válido. Por favor ingrese sólo números sin dígito de verificación</p>
+    <p id="tel_error" style="display: none;" class="alert alert-danger">Ingrese un teléfono valido (Ej: 3001112233 ó 5714046535)</p>
+    <p id="budget_error1" style="display: none;" class="alert alert-danger">El presupuesto mínimo no puede ser mayor al presupuesto máximo</p>
+    <p id="budget_error2" style="display: none;" class="alert alert-danger">El presupuesto no puede ser menor a 0</p>
+
+
+
+    <!-- Seccion Info basica -->
+    <div class="tab">
+        <div id="nombre_empresa" class="wrap-input100 validate-input" data-validate="El nombre es obligatorio">
+            <div>
+                {{form.nom_empresa}}
+            </div>
+            <span class="focus-input100"></span>
+            <span class="symbol-input100">
+                <i class="fa fa-building" aria-hidden="true"></i>
+            </span>
+        </div>
+        <div class="wrap-input100 validate-input" data-validate="NIT es obligatorio">
+            <div>
+                {{form.nit}}
+            </div>
+            <span class="focus-input100"></span>
+            <span class="symbol-input100">
+                <i class="fa fa-id-card" aria-hidden="true"></i>
+            </span>
+        </div>
+        <div class="wrap-input100 validate-input" data-validate="Celular es obligatorio">
+            <div>
+                {{form.telefono}}
+            </div>
+            <span class="focus-input100"></span>
+            <span class="symbol-input100">
+                <i class="fa fa-phone" aria-hidden="true"></i>
+            </span>
+        </div>
+        <div class="wrap-input100 validate-input" data-validate="Ciudad es obligatorio">
+            <div>
+                {{form.ciudad}}
+            </div>
+            <span class="focus-input100"></span>
+            <span class="symbol-input100">
+                <i class="fa fa-globe" aria-hidden="true"></i>
+            </span>
+        </div>
+    </div>
+
+    <!-- Seccion Info economica -->
+    <div class="tab">
+        <div class="wrap-input100 validate-input" data-validate="Monto mínimo es obligatorio">
+            <div>
+                {{form.presupuesto_min}}
+            </div>
+            <span class="focus-input100"></span>
+            <span class="symbol-input100">
+                <i class="fa fa-money" aria-hidden="true"></i>
+            </span>
+        </div>
+        <div class="wrap-input100 validate-input" data-validate="Monto máximo es obligatorio">
+            <div>
+                {{form.presupuesto_max}}
+            </div>
+            <span class="focus-input100"></span>
+            <span class="symbol-input100">
+                <i class="fa fa-money" aria-hidden="true"></i>
+            </span>
+        </div>
+    </div>
+
+    <!-- Seccion Confirmación -->
+    <div class="tab">
+        <div class="wrap-input100 validate-input" data-validate="Monto máximo es obligatorio">
+            <div>
+                {{form.activ_economica}}
+            </div>
+            <span class="focus-input100"></span>
+            <span class="symbol-input100">
+                <i class="fa fa-industry" aria-hidden="true"></i>
+            </span>
+        </div>
+    </div>
+
+    <div style="overflow:auto; margin-top: 2rem;">
+
+        <button type="button" style="color: #a2dc4d; float: left;" id="prevBtn" onclick="nextPrev(-1)">Volver</button>
+        <button type="submit" style="color: #a2dc4d; float: right;" id="nextBtn" onclick="nextPrev(1)">Siguiente</button>
+
+    </div>
+
+
+    <!-- Circles which indicates the steps of the form: -->
+    <div style="text-align:center;margin-top:40px;">
+        <span class="step"></span>
+        <span class="step"></span>
+        <span class="step"></span>
+        <span class="step"></span>
+    </div>
+
+</form>
+
+<script>
+    var currentTab = 0; // Current tab is set to be the first tab (0)
+    showTab(currentTab); // Display the current tab
+    function showTab(n) {
+        // This function will display the specified tab of the form ...
+        var x = document.getElementsByClassName("tab");
+        x[n].style.display = "block";
+        // Set display "none" if tab is different to the current tab
+        for (i = 0; i < x.length; i++) {
+            if (i != n) {
+                x[i].style.display = "none"
+            }
+        }
+        // ... and fix the Previous/Next buttons:
+        if (n == 0) {
+            document.getElementById("prevBtn").style.display = "none";
+        } else {
+            document.getElementById("prevBtn").style.display = "inline";
+        }
+        if (n == (x.length - 1)) {
+            document.getElementById("nextBtn").innerHTML = "FINALIZAR";
+        } else {
+            document.getElementById("nextBtn").innerHTML = "Siguiente";
+        }
+        // ... and run a function that displays the correct step indicator:
+        fixStepIndicator(n)
+    }
+
+    function nextPrev(n) {
+        // This function will figure out which tab to display
+        var x = document.getElementsByClassName("tab");
+        var validator = true;
+        // Reset Errors
+        resetErrors();
+        // Validate fields tab BasicInfo
+        if (currentTab == 0) {
+            validator = basicInfoValidation();
+        }
+        if (currentTab == 1) {
+            validator = budgetValidation();
+        }
+        if (n == 1 && !validator) return false;
+        // Hide the current tab:
+        x[currentTab].style.display = "none";
+        // Increase or decrease the current tab by 1:
+        currentTab = currentTab + n;
+        // if you have reached the end of the form... :
+        if (currentTab >= x.length) {
+            //...the form gets submitted:
+            document.getElementById("profile_form").submit();
+            return false;
+        }
+        // Otherwise, display the correct tab:
+        showTab(currentTab);
+    }
+
+    function basicInfoValidation() {
+        nit = document.getElementById('id_nit')
+        tel = document.getElementById('id_telefono')
+        var reg = /^\(?([0-9]{3})\)?[]?([0-9]{3})[]?([0-9]{4})$/;
+        error = false
+        if (nit.value.length != 10) {
+            document.getElementById('nit_error').style.display = "block";
+            error = true;
+        }
+        if (!reg.exec(tel.value)) {
+            document.getElementById('tel_error').style.display = "block";
+            error = true;
+        }
+        return !error;
+    }
+
+    function budgetValidation() {
+        presupuesto_min = parseInt(document.getElementById('id_presupuesto_min').value);
+        presupuesto_max = parseInt(document.getElementById('id_presupuesto_max').value);
+        error = false;
+        if (presupuesto_min > presupuesto_max) {
+            document.getElementById('budget_error1').style.display = "block";
+            error = true;
+        }
+        if ((presupuesto_min < 0) || (presupuesto_max < 0)) {
+            document.getElementById('budget_error2').style.display = "block";
+            error = true;
+        }
+
+        return !error;
+    }
+
+    function resetErrors() {
+        document.getElementById('nit_error').style.display = "none";
+        document.getElementById('tel_error').style.display = "none";
+        document.getElementById('budget_error1').style.display = "none";
+        document.getElementById('budget_error2').style.display = "none";
+    }
+
+    function fixStepIndicator(n) {
+        // Update progress step indicators        
+        if (n == 0) {
+            document.getElementById("step_1").className = "active"
+            document.getElementById("step_2").className = ""
+            document.getElementById("step_3").className = ""
+        }
+        if (n == 1) {
+            document.getElementById("step_1").className = "completed"
+            document.getElementById("step_2").className = "active"
+            document.getElementById("step_3").className = ""
+        }
+        if (n == 2) {
+            document.getElementById("step_1").className = "completed"
+            document.getElementById("step_2").className = "completed"
+            document.getElementById("step_3").className = ""
+        }
+    }
+</script>
+
+
+
+{% endblock %}

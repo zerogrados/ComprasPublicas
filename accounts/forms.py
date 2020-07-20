@@ -4,10 +4,11 @@ from phonenumber_field.formfields import PhoneNumberField
 
 # Django
 from django import forms
+from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 # Models
-from .models import Usuario
+from .models import Usuario, Perfil
 
 class UserForm(UserCreationForm):
     """Formulario de registro de usuarios."""
@@ -20,4 +21,19 @@ class UserForm(UserCreationForm):
     class Meta:
         model = Usuario
         fields = ('first_name', 'last_name', 'email', 'celular', 'password1', 'password2',)
+
+
+class ProfileForm(ModelForm):
+    """Formulario para compllementar información empresarial"""
+    nom_empresa = forms.CharField(widget=forms.TextInput(attrs={'class':'input100','placeholder':'Nombre de la Empresa'}))
+    nit = forms.CharField(widget=forms.TextInput(attrs={'class':'input100','placeholder':'NIT', 'type':'number'}))    
+    telefono = PhoneNumberField(region='CO', widget=forms.NumberInput(attrs={'class':'input100','placeholder':'Teléfono', 'type':'tel'}))
+    ciudad = forms.CharField(widget=forms.TextInput(attrs={'class':'input100','placeholder':'Ciudad(es) de operación'}))
+    presupuesto_min = forms.DecimalField(widget=forms.TextInput(attrs={'class':'input100','placeholder':'Monto mínimo de contratación', 'type':'number'}))
+    presupuesto_max = forms.DecimalField(widget=forms.TextInput(attrs={'class':'input100','placeholder':'Monto máximo de contratación', 'type':'number'}))
+    activ_economica = forms.CharField(widget=forms.TextInput(attrs={'class':'input100','placeholder':'Actividad(es) económica(s)'}))
+    
+    class Meta:
+        model = Perfil
+        fields = ['nom_empresa', 'nit', 'telefono', 'ciudad', 'presupuesto_min', 'presupuesto_max', 'activ_economica']
 

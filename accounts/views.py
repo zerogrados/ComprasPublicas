@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth import views as auth_views
+from rest_framework.decorators import api_view
 
 # Models
 from .models import Usuario, Perfil
@@ -13,7 +14,7 @@ from .models import Usuario, Perfil
 import json
 
 # Forms
-from .forms import UserForm
+from .forms import UserForm, ProfileForm
 
 def loginView(request):
     if request.method == 'POST':
@@ -67,6 +68,24 @@ def createUserView(request):
     else:
         form = UserForm()
     return render(request, 'account/signup.html', {'form': form})
+
+
+#@login_required
+@api_view(['GET', 'POST'])
+def updateProfileView(request):    
+    if request.method == 'GET':
+        form = ProfileForm()
+        return render(request, 'account/profile_info.html', {'form': form})
+
+    elif request.method == 'POST':
+        form = ProfileForm(request.POST)
+        print('Request received')
+        return render(request, 'account/profile_info.html', {'form': form})
+    
+
+
+
+    
 
 
 @login_required
