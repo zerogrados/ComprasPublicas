@@ -38,6 +38,7 @@ urlpatterns = [
              template_name='account/password_reset_complete.html'
          ),
          name='password_reset_complete'),
+    path('cod/', views.cod, name="cod"),
     
     # PROFILE
     path('profile_form/', views.updateProfileView, name='perfil_empresarial'),

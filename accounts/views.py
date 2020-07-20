@@ -1,5 +1,5 @@
+# Django
 from django.shortcuts import render, redirect
-from .models import Usuario, Perfil
 from django.db.utils import IntegrityError
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -7,7 +7,11 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth import views as auth_views
 from rest_framework.decorators import api_view
 
-# Create your views here.
+# Models
+from .models import Usuario, Perfil
+
+# Utilities
+import json
 
 # Forms
 from .forms import UserForm, ProfileForm
@@ -114,3 +118,9 @@ class ResetPasswordView(auth_views.PasswordResetView):
         else:
             form.errors['email'] = 'No existe un usuario con el correo ingresado'
             return render(self.request, 'account/password_reset_form.html', {'form': form})
+
+def cod(request):
+    #with open('colombia.json') as json_file:
+    #    data = json.load(json_file)
+    #    print(data)
+    return render(request, 'account/set_code_unspsc.html')
