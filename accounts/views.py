@@ -70,17 +70,14 @@ def createUserView(request):
 
 
 #@login_required
-def updateProfileView(request):    
+def updateProfileView(request):
     if request.method == 'GET':
         form = ProfileForm()
-        last_section = False
-        return render(request, 'account/profile_info.html', {'form': form, 'last_section': last_section})
+        return render(request, 'account/profile_info.html', {'form': form})
 
     elif request.method == 'POST':
         form = ProfileForm(request.POST)
-        last_section = True
-        print('Request received')
-        return render(request, 'account/profile_info.html', {'form': form, 'last_section': last_section})
+        return render(request, 'account/profile_info.html', {'form': form})
     
 @login_required
 def logoutView(request):

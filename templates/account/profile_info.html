@@ -17,7 +17,7 @@
     <ul class="progress-indicator" style="margin-bottom: 2rem;">
         <li id="step_1" class="active"> <span class="bubble"></span> Info Básica </li>
         <li id="step_2"> <span class="bubble"></span> Info Económica </li>
-        
+        <li id="step_3"> <span class="bubble"></span> Info Comercial </li>
     </ul>
 
 
@@ -96,7 +96,7 @@
     <div class="tab">
         <div class="wrap-input100 validate-input" data-validate="Monto máximo es obligatorio">
             <div>
-                <input type="text" name='raro' id="justAnInputBox1" placeholder="Agregue las actividades económicas a las que se dedica la empresa." autocomplete="off"/>
+                <input type="text" name='unspsc' id="justAnInputBox1" placeholder="Agregue las actividades económicas a las que se dedica la empresa." autocomplete="off"/>
             </div>
             <span class="focus-input100"></span>
         </div>
@@ -106,8 +106,8 @@
 
         <button type="button" style="color: #a2dc4d; float: left;" id="prevBtn" onclick="nextPrev(-1)">Volver</button>
         <button type="button" style="color: #a2dc4d; float: right;" id="nextBtn" onclick="nextPrev(1)">Siguiente</button>
-
     </div>
+
 
 
     <!-- Circles which indicates the steps of the form: -->
@@ -182,10 +182,11 @@
         // Hide the current tab:
         x[currentTab].style.display = "none";
         currentTab = currentTab + n;
-        // if you have reached the end of the form... :
+        // if you have reached the end of the form...    
         if (currentTab >= x.length) {
             console.log('entro a funcion submit');
             //...the form gets submitted:
+            document.getElementById("justAnInputBox1").value = comboTree3.getSelectedIds();
             document.getElementById("profile_form").submit();
             return false;
         }
@@ -9323,32 +9324,14 @@ var SampleJSONData = [
 ];
 
 
-var comboTree1, comboTree2;
+var comboTree3;
 
 jQuery(document).ready(function($) {
-
-		comboTree1 = $('#justAnInputBox').comboTree({
-			source : SampleJSONData,
-			isMultiple: true,
-			cascadeSelect: false,
-			collapse: true,
-			selectableLastNode: true
-
-		});
 		
 		comboTree3 = $('#justAnInputBox1').comboTree({
 			source : SampleJSONData,
 			isMultiple: true,
-			cascadeSelect: true,
-			collapse: false
-		});
-
-		comboTree3.setSource(SampleJSONData);
-
-
-		comboTree2 = $('#justAnotherInputBox').comboTree({
-			source : SampleJSONData,
-			isMultiple: false
+			collapse: false,
 		});
 });
 </script>
