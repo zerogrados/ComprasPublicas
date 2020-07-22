@@ -5,7 +5,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth import views as auth_views
-from rest_framework.decorators import api_view
 
 # Models
 from .models import Usuario, Perfil
@@ -71,23 +70,18 @@ def createUserView(request):
 
 
 #@login_required
-@api_view(['GET', 'POST'])
 def updateProfileView(request):    
     if request.method == 'GET':
         form = ProfileForm()
-        return render(request, 'account/profile_info.html', {'form': form})
+        last_section = False
+        return render(request, 'account/profile_info.html', {'form': form, 'last_section': last_section})
 
     elif request.method == 'POST':
         form = ProfileForm(request.POST)
+        last_section = True
         print('Request received')
-        return render(request, 'account/profile_info.html', {'form': form})
+        return render(request, 'account/profile_info.html', {'form': form, 'last_section': last_section})
     
-
-
-
-    
-
-
 @login_required
 def logoutView(request):
     # Logout

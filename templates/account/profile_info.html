@@ -3,7 +3,7 @@
 {% endblock %} {% block container %}
 
 <form id="profile_form" class="validate-form" method="POST" action="{% url 'perfil_empresarial' %}">
-
+    {% csrf_token %}
     <span class="login100-form-title">
         Información Empresarial
     </span>
@@ -119,7 +119,11 @@
 </form>
 
 <script>
-    var currentTab = 0; // Current tab is set to be the first tab (0)
+    {% if last_section %} 
+        var currentTab = 2; // Current tab is set to be the first tab (0)
+    {% else %}
+        var currentTab = 0; // Current tab is set to be the first tab (0)
+    {% endif %}
     showTab(currentTab); // Display the current tab
     function showTab(n) {
         // This function will display the specified tab of the form ...
@@ -165,10 +169,13 @@
         // Increase or decrease the current tab by 1:
         currentTab = currentTab + n;
         // if you have reached the end of the form... :
-        if (currentTab >= x.length) {
+        if (currentTab == 2) {
             //...the form gets submitted:
             document.getElementById("profile_form").submit();
             return false;
+        }
+        if (currentTab == 3) {
+            document.getElementById("")
         }
         // Otherwise, display the correct tab:
         showTab(currentTab);
