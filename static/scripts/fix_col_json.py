@@ -1,7 +1,7 @@
 import os
 import json
 
-with open('colombia.json') as jsonfile:
+with open('../files/colombia.json') as jsonfile:
     colombia = json.load(jsonfile)
     id_department = 1000
     cities = []

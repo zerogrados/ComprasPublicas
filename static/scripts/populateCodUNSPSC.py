@@ -21,7 +21,7 @@ def connectDB():
 
 def updateDB(connection):
     cursor = connection.cursor()
-    with open('codigosUNSPSC.csv', newline='\n') as csvfile:
+    with open('../files/codigosUNSPSC.csv', newline='\n') as csvfile:
         read_data = csv.reader(csvfile, delimiter=';')
         for row in read_data:            
             for codigo in row:

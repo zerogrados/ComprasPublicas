@@ -10,7 +10,7 @@ arrayFamilia = []
 arrayClase = []
 arrayProducto = []
 
-with open('clasificadorUNSPSC.csv', 'r') as csvfile:
+with open('../files/clasificadorUNSPSC.csv', 'r') as csvfile:
     read_data = csv.reader(csvfile, delimiter=';')
     for row in read_data: 
         try:
@@ -24,7 +24,7 @@ with open('clasificadorUNSPSC.csv', 'r') as csvfile:
             continue
 
     for segmento in arraySegmento:
-        with open('clasificadorUNSPSC.csv', 'r') as csvfile:
+        with open('../files/clasificadorUNSPSC.csv', 'r') as csvfile:
             read_data = csv.reader(csvfile, delimiter=';')
             for row in read_data:
                 try:
@@ -41,7 +41,7 @@ with open('clasificadorUNSPSC.csv', 'r') as csvfile:
     
     for segmento in arraySegmento:
         for familia in segmento['subs']:
-            with open('clasificadorUNSPSC.csv', 'r') as csvfile:
+            with open('../files/clasificadorUNSPSC.csv', 'r') as csvfile:
                 read_data = csv.reader(csvfile, delimiter=';')
                 for row in read_data:
                     try:
@@ -59,7 +59,7 @@ with open('clasificadorUNSPSC.csv', 'r') as csvfile:
     for segmento in arraySegmento:
         for familia in segmento['subs']:
             for clase in familia['subs']:
-                with open('clasificadorUNSPSC.csv', 'r') as csvfile:
+                with open('../files/clasificadorUNSPSC.csv', 'r') as csvfile:
                     read_data = csv.reader(csvfile, delimiter=';')
                     for row in read_data:
                         try:
