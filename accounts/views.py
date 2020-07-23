@@ -77,6 +77,7 @@ def updateProfileView(request):
 
     elif request.method == 'POST':
         form = ProfileForm(request.POST)
+        print(request.POST)
         return render(request, 'account/profile_info.html', {'form': form})
     
 @login_required
@@ -110,8 +111,3 @@ class ResetPasswordView(auth_views.PasswordResetView):
             form.errors['email'] = 'No existe un usuario con el correo ingresado'
             return render(self.request, 'account/password_reset_form.html', {'form': form})
 
-def cod(request):
-    #with open('colombia.json') as json_file:
-    #    data = json.load(json_file)
-    #    print(data)
-    return render(request, 'account/set_code_unspsc.html')

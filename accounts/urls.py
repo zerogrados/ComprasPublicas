@@ -15,7 +15,8 @@ urlpatterns = [
         ),
         name='change_password'
     ),
-        # Forget Password
+    
+    # Forget Password
     path('password_reset/',
          views.ResetPasswordView.as_view(
              template_name='account/password_reset_form.html',
@@ -37,8 +38,7 @@ urlpatterns = [
          auth_views.PasswordResetCompleteView.as_view(
              template_name='account/password_reset_complete.html'
          ),
-         name='password_reset_complete'),
-    path('cod/', views.cod, name="cod"),
+         name='password_reset_complete'),   
     
     # PROFILE
     path('profile_form/', views.updateProfileView, name='perfil_empresarial'),
