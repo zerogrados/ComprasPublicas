@@ -3,9 +3,8 @@
 {% endblock %} {% block container %}
 
 <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.0.45/css/materialdesignicons.min.css">
 <link rel="stylesheet" href="{% static 'scripts/style.css' %}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 
 <form id="profile_form" class="validate-form" method="POST" action="{% url 'perfil_empresarial' %}">
     {% csrf_token %}
@@ -22,11 +21,15 @@
 
 
 
-
+    <p id="empresa_error" style="display: none;" class="alert alert-danger">El nombre de la empresa es obligatorio</p>
     <p id="nit_error" style="display: none;" class="alert alert-danger">NIT no válido. Por favor ingrese sólo números sin dígito de verificación</p>
     <p id="tel_error" style="display: none;" class="alert alert-danger">Ingrese un teléfono valido (Ej: 3001112233 ó 5714046535)</p>
+    <p id="ciudad_error" style="display: none;" class="alert alert-danger">Seleccione al menos una ciudad</p>
     <p id="budget_error1" style="display: none;" class="alert alert-danger">El presupuesto mínimo no puede ser mayor al presupuesto máximo</p>
     <p id="budget_error2" style="display: none;" class="alert alert-danger">El presupuesto no puede ser menor a 0</p>
+    <p id="budget_error3" style="display: none;" class="alert alert-danger">El presupuesto mínimo es obligatorio</p>
+    <p id="budget_error4" style="display: none;" class="alert alert-danger">El presupuesto máximo es obligatorio</p>
+    <p id="actividad_error" style="display: none;" class="alert alert-danger">Seleccione al menos una actividad económica</p>
 
 
 
@@ -72,12 +75,12 @@
     <div class="tab">
         <div class="wrap-input100 validate-input" data-validate="Monto mínimo es obligatorio">
             <div>
-                {{form.presupuesto_min}}
+                {{form.presupuesto_min}}                
             </div>
             <span class="focus-input100"></span>
             <span class="symbol-input100">
                 <i class="fa fa-money" aria-hidden="true"></i>
-            </span>
+            </span>            
         </div>
         <div class="wrap-input100 validate-input" data-validate="Monto máximo es obligatorio">
             <div>
@@ -123,30 +126,49 @@
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src={% static 'js/comboTreePlugin.js' %}  type="text/javascript"></script>
-
+<script>
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();   
+    });
+</script>
 <script>
     var currentTab = 0; // Current tab is set to be the first tab (0)
     showTab(currentTab); // Display the current tab
     function showTab(n) {
         // This function will display the specified tab of the form ...
         var x = document.getElementsByClassName("tab");
+        var errors = document.getElementsByTagName("P");
+        console.log(errors[0]);
+        var i;
         x[n].style.display = "block";
         if ($(window).width() >= 992) {
-           x[n].style.width = "620px";
+           x[n].style.width = "620px";           
         }
         if ($(window).width() < 992) {
            x[n].style.width = "620px";
+           for (i = 0; i < errors.length; i++) {
+               errors[i].style.width = "620px";
+               errors[i].style.fontSize = "12px";
+           }           
         }
         if ($(window).width() < 768) {
             x[n].style.width = "412px";
+            for (i = 0; i < errors.length; i++) {
+               errors[i].style.width = "412px";
+               errors[i].style.fontSize = "12px";
+            }
         }
         if ($(window).width() < 576) {
             x[n].style.width = "312px";
+            for (i = 0; i < errors.length; i++) {
+               errors[i].style.width = "312px";
+               errors[i].style.fontSize = "12px";
+            }
         }    
         // Set display "none" if tab is different to the current tab
         for (i = 0; i < x.length; i++) {
             if (i != n) {
-                x[i].style.display = "none"
+                x[i].style.display = "none";
             }
         }
         // ... and fix the Previous/Next buttons:
@@ -164,9 +186,7 @@
         fixStepIndicator(n)
     }
 
-    function nextPrev(n) {
-        // Increase or decrease the current tab by 1:
-        console.log(currentTab);
+    function nextPrev(n) {                
         // This function will figure out which tab to display
         var x = document.getElementsByClassName("tab");
         var validator = true;
@@ -179,13 +199,17 @@
         if (currentTab == 1) {
             validator = budgetValidation();
         }
+        if (currentTab == 2) {            
+            validator = activityValidation();
+        }
         if (n == 1 && !validator) return false;
+
         // Hide the current tab:
         x[currentTab].style.display = "none";
+        // Increase or decrease the current tab by 1:
         currentTab = currentTab + n;
         // if you have reached the end of the form...    
-        if (currentTab >= x.length) {
-            console.log('entro a funcion submit');
+        if (currentTab >= x.length) {            
             //...the form gets submitted:
             document.getElementById("justAnInputBox1").value = comboTree3.getSelectedIds();
             document.getElementById("justAnInputBox2").value = comboTree2.getSelectedIds();
@@ -197,8 +221,10 @@
     }
 
     function basicInfoValidation() {
+        empresa = document.getElementById('id_nom_empresa')
         nit = document.getElementById('id_nit')
         tel = document.getElementById('id_telefono')
+        ciudad = comboTree2.getSelectedIds();
         var reg = /^\(?([0-9]{3})\)?[]?([0-9]{3})[]?([0-9]{4})$/;
         error = false
         if (nit.value.length != 10) {
@@ -209,12 +235,20 @@
             document.getElementById('tel_error').style.display = "block";
             error = true;
         }
+        if(!$.trim(empresa.value).length) {
+            document.getElementById('empresa_error').style.display = "block";
+            error = true;
+        }
+        if (ciudad == null){
+            document.getElementById('ciudad_error').style.display = "block";
+            error = true;
+        }
         return !error;
     }
 
     function budgetValidation() {
         presupuesto_min = parseInt(document.getElementById('id_presupuesto_min').value);
-        presupuesto_max = parseInt(document.getElementById('id_presupuesto_max').value);
+        presupuesto_max = parseInt(document.getElementById('id_presupuesto_max').value);        
         error = false;
         if (presupuesto_min > presupuesto_max) {
             document.getElementById('budget_error1').style.display = "block";
@@ -224,6 +258,25 @@
             document.getElementById('budget_error2').style.display = "block";
             error = true;
         }
+        if(isNaN(presupuesto_min)) {
+            document.getElementById('budget_error3').style.display = "block";
+            error = true;
+        }
+        if(isNaN(presupuesto_max)) {
+            document.getElementById('budget_error4').style.display = "block";
+            error = true;
+        }
+
+        return !error;
+    }
+
+    function activityValidation() {
+        codigoUNSPSC = comboTree3.getSelectedIds();
+        error = false;
+        if (codigoUNSPSC == null){
+            document.getElementById('actividad_error').style.display = "block";
+            error = true;
+        }
 
         return !error;
     }
@@ -231,8 +284,13 @@
     function resetErrors() {
         document.getElementById('nit_error').style.display = "none";
         document.getElementById('tel_error').style.display = "none";
+        document.getElementById('empresa_error').style.display = "none";
+        document.getElementById('ciudad_error').style.display = "none";
         document.getElementById('budget_error1').style.display = "none";
         document.getElementById('budget_error2').style.display = "none";
+        document.getElementById('budget_error3').style.display = "none";
+        document.getElementById('budget_error4').style.display = "none";
+        document.getElementById('actividad_error').style.display = "none";
     }
 
     function fixStepIndicator(n) {

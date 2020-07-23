@@ -78,7 +78,7 @@ def updateProfileView(request):
     elif request.method == 'POST':
         form = ProfileForm(request.POST)
         print(request.POST)
-        return render(request, 'account/profile_info.html', {'form': form})
+        return redirect('welcome_page')
     
 @login_required
 def logoutView(request):
