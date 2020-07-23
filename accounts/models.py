@@ -26,6 +26,7 @@ class CodUNSPSC(models.Model):
 
 class Ciudad(models.Model):
     # Modelo para almacenar ciudades de operacion
+    codigo_ciudad = models.IntegerField(null=False, primary_key=True)
     ciudad = models.CharField(null=False, blank=False, max_length=50)
     departamento = models.CharField(null=False, blank=False, max_length=50)
 

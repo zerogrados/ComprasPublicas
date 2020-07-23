@@ -23,18 +23,18 @@ def connectDB():
 def updateCities(connection):
     error = None
     cursor = connection.cursor()
-    with open('colombia.json') as jsonfile:
+    with open('colombia_fix.json') as jsonfile:
         colombia = json.load(jsonfile)
 
     for department in colombia:
-        for city in department['ciudades']:
+        for city in department['subs']:
             query = sql.SQL(
-                "SELECT * FROM accounts_ciudad WHERE (ciudad = '{}' AND departamento = '{}')".format(city, department['departamento']))
+                "SELECT * FROM accounts_ciudad WHERE (ciudad = '{}' AND departamento = '{}')".format(city['title'], department['title']))
             cursor.execute(query)
             result = cursor.fetchall()
             if len(result) == 0:
-                query = sql.SQL("INSERT INTO accounts_ciudad (ciudad, departamento) VALUES ('{}', '{}')".format(
-                    city, department['departamento']))
+                query = sql.SQL("INSERT INTO accounts_ciudad (codigo_ciudad, ciudad, departamento) VALUES ('{}', '{}', '{}')".format(
+                    city['id'], city['title'], department['title']))
                 try:
                     cursor.execute(query)
                     connection.commit()
@@ -46,7 +46,7 @@ def updateCities(connection):
                     connection.close()
                     break
             else:
-                print(city, department['departamento'], 'ya existe')
+                print(city, department['title'], 'ya existe')
 
     result = not(error)
     return result
