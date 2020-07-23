@@ -59,11 +59,12 @@
                 <i class="fa fa-phone" aria-hidden="true"></i>
             </span>
         </div>
-        <div class="wrap-input100 validate-input" data-validate="Ciudad es obligatorio">
-            <div>
-                <input type="text" name='ciudades' id="justAnInputBox2" placeholder="Agregue la(s) ciudad(es) de operación de la empresa" autocomplete="off"/>
-            </div>
-            <span class="focus-input100"></span>            
+        <div class="wrap-input100 validate-input" data-validate="Ciudad es obligatorio">            
+            <input class="input100" type="text" name='ciudades' id="justAnInputBox2" placeholder="Agregue la(s) ciudad(es) de operación de la empresa" autocomplete="off"/>            
+            <span class="focus-input100"></span> 
+            <span class="symbol-input100">
+                <i class="fa fa-globe" aria-hidden="true"></i>
+            </span>           
         </div>
     </div>
 
@@ -92,10 +93,13 @@
     <!-- Seccion Confirmación -->
     <div class="tab">
         <div class="wrap-input100 validate-input" data-validate="Monto máximo es obligatorio">
-            <div>
-                <input type="text" name='unspsc' id="justAnInputBox1" placeholder="Agregue las actividades económicas a las que se dedica la empresa." autocomplete="off"/>
-            </div>
+            
+            <input class="input100" type="text" name='unspsc' id="justAnInputBox1" placeholder="Agregue las actividades económicas a las que se dedica la empresa." autocomplete="off"/>
+            
             <span class="focus-input100"></span>
+            <span class="symbol-input100">
+                <i class="fa fa-industry" aria-hidden="true"></i>
+            </span>
         </div>
     </div>
 
@@ -128,16 +132,16 @@
         var x = document.getElementsByClassName("tab");
         x[n].style.display = "block";
         if ($(window).width() >= 992) {
-           x[2].style.width = "512px";
+           x[n].style.width = "620px";
         }
         if ($(window).width() < 992) {
-           x[2].style.width = "512px";
+           x[n].style.width = "620px";
         }
         if ($(window).width() < 768) {
-            x[2].style.width = "412px";
+            x[n].style.width = "412px";
         }
         if ($(window).width() < 576) {
-            x[2].style.width = "312px";
+            x[n].style.width = "312px";
         }    
         // Set display "none" if tab is different to the current tab
         for (i = 0; i < x.length; i++) {
