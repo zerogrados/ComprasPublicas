@@ -56,7 +56,7 @@ def createUserView(request):
                                     password=form.cleaned_data['password1'],
                                     )
             login(request, new_user)
-            return redirect('welcome_page')
+            return redirect('enterprise_profile')
 
         else:
 

@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="{% static 'scripts/style.css' %}">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 
-<form id="profile_form" class="validate-form" method="POST" action="{% url 'perfil_empresarial' %}">
+<form id="profile_form" class="validate-form" method="POST" action="{% url 'enterprise_profile' %}">
     {% csrf_token %}
     <span class="login100-form-title">
         Información Empresarial
@@ -228,7 +228,7 @@
         ciudad = comboTree2.getSelectedIds();
         var reg = /^\(?([0-9]{3})\)?[]?([0-9]{3})[]?([0-9]{4})$/;
         error = false
-        if (nit.value.length != 10) {
+        if (nit.value.length != 9) {
             document.getElementById('nit_error').style.display = "block";
             error = true;
         }

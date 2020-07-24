@@ -41,5 +41,5 @@ urlpatterns = [
          name='password_reset_complete'),   
     
     # PROFILE
-    path('profile_form/', views.updateProfileView, name='perfil_empresarial'),
+    path('profile_form/', views.updateProfileView, name='enterprise_profile'),
 ]
