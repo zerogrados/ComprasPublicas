@@ -11,17 +11,18 @@ from .models import Usuario, Perfil
 
 # Utilities
 import json
-from .utilities.profile_middleware import retriveCities, retriveCodes
+from .utilities.update_profiles import updateProfile
 
 # Forms
 from .forms import UserForm, ProfileForm
+
 
 def loginView(request):
     if request.method == 'POST':
         try:
             user = authenticate(email=request.POST['login'],
-                            password=request.POST['password'],
-            )
+                                password=request.POST['password'],
+                                )
             login(request, user)
             return redirect('welcome_page')
         except:
@@ -69,20 +70,19 @@ def createUserView(request):
         form = UserForm()
     return render(request, 'account/signup.html', {'form': form})
 
-#@login_required
+
+@login_required
 def updateProfileView(request):
     if request.method == 'GET':
         form = ProfileForm()
         return render(request, 'account/profile_info.html', {'form': form})
 
     elif request.method == 'POST':
-        form = ProfileForm(request.POST)
-        cities = retriveCities(request.POST['ciudades'])
-        codUNSPSC = retriveCodes(request.POST['unspsc'])
-        print(cities)
-        print(codUNSPSC)
-        return redirect('perfil_empresarial')
-    
+        updateProfile(request)
+        return redirect('welcome_page')
+        
+
+
 @login_required
 def logoutView(request):
     # Logout
@@ -113,4 +113,3 @@ class ResetPasswordView(auth_views.PasswordResetView):
         else:
             form.errors['email'] = 'No existe un usuario con el correo ingresado'
             return render(self.request, 'account/password_reset_form.html', {'form': form})
-

@@ -13,6 +13,7 @@ def retriveCities(request_cities):
             cities.append(Ciudad.objects.get(codigo_ciudad=city))
         except:
             pass
+    
     return cities
 
 
@@ -21,11 +22,10 @@ def retriveCodes(request_codes):
     This method retrive an array of CodUNSPSC objects.
     """
     codes = []
-    for code in request_codes.split(','):
-        print(code)
+    for code in request_codes.split(','):        
         try:
             codes.append(CodUNSPSC.objects.get(codigo=code))
-        except:
-            print('except')
+        except:            
             pass
+
     return codes
