@@ -3,6 +3,7 @@
 {% endblock %} {% block container %}
 
 <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.0.45/css/materialdesignicons.min.css">
 <link rel="stylesheet" href="{% static 'scripts/style.css' %}">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 
@@ -340,6 +341,7 @@ jQuery(document).ready(function($) {
 			source : ciudadesJSON,
 			isMultiple: true,
 			collapse: true,
+            cascadeSelect:true,
 		});
 });
 </script>

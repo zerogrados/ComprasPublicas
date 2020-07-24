@@ -11,6 +11,7 @@ from .models import Usuario, Perfil
 
 # Utilities
 import json
+from .utilities.profile_middleware import retriveCities, retriveCodes
 
 # Forms
 from .forms import UserForm, ProfileForm
@@ -68,7 +69,6 @@ def createUserView(request):
         form = UserForm()
     return render(request, 'account/signup.html', {'form': form})
 
-
 #@login_required
 def updateProfileView(request):
     if request.method == 'GET':
@@ -77,8 +77,11 @@ def updateProfileView(request):
 
     elif request.method == 'POST':
         form = ProfileForm(request.POST)
-        print(request.POST)
-        return redirect('welcome_page')
+        cities = retriveCities(request.POST['ciudades'])
+        codUNSPSC = retriveCodes(request.POST['unspsc'])
+        print(cities)
+        print(codUNSPSC)
+        return redirect('perfil_empresarial')
     
 @login_required
 def logoutView(request):
