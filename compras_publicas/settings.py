@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
     # 'landingPage',
     'accounts',
+    'oportunities',
 ]
 
 MIDDLEWARE = [
