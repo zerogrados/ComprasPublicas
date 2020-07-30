@@ -21,7 +21,7 @@ class Usuario(AbstractUser):
 
 class CodUNSPSC(models.Model):
     # Modelo para almacenar los codigos de las actividades economicas
-    codigo = models.CharField(null=False, blank=False, max_length=10)
+    codigo = models.CharField(null=False, blank=False, max_length=10, primary_key=True)
 
 
 class Ciudad(models.Model):
