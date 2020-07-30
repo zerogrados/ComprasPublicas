@@ -33,8 +33,8 @@ def updateCities(connection):
             cursor.execute(query)
             result = cursor.fetchall()
             if len(result) == 0:
-                query = sql.SQL("INSERT INTO accounts_ciudad (codigo_ciudad, ciudad, departamento) VALUES ('{}', '{}', '{}')".format(
-                    city['id'], city['title'], department['title']))
+                query = sql.SQL("INSERT INTO accounts_ciudad (codigo_ciudad, ciudad, departamento, ciudad_lower, departamento_lower) VALUES ('{}', '{}', '{}', '{}', '{}')".format(
+                    city['id'], city['title'], department['title'], city['title'].lower(), department['title'].lower()))
                 try:
                     cursor.execute(query)
                     connection.commit()

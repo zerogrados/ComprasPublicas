@@ -115,3 +115,5 @@ media/
 
 # .ini conf files
 *.ini
+
+*colombia_fix.json

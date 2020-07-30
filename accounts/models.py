@@ -29,6 +29,8 @@ class Ciudad(models.Model):
     codigo_ciudad = models.IntegerField(null=False, primary_key=True)
     ciudad = models.CharField(null=False, blank=False, max_length=50)
     departamento = models.CharField(null=False, blank=False, max_length=50)
+    ciudad_lower = models.CharField(null=True, blank=True, max_length=50)
+    departamento_lower = models.CharField(null=True, blank=True, max_length=50)
 
 
 
