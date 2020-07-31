@@ -5,9 +5,12 @@ from psycopg2 import errors
 import datetime
 import logging
 
-logging.basicConfig(filename='cities.log',level=logging.CRITICAL)
+cities_log = logging.basicConfig(filename='cities.log',level=logging.CRITICAL)
+worker_log = logging.basicConfig(filename='worker.log',level=logging.ERROR)
 
 def connect_database():
+    """Connect to database.
+    """
     try:
         connection = psycopg2.connect(user=os.environ.get('DBUSER', None),
                                       password=os.environ.get('DBPASS', None),
@@ -16,13 +19,16 @@ def connect_database():
                                       database=os.environ.get('DBNAME', None))
 
     except (Exception, psycopg2.Error) as error:
-        print(error)
+        worker_log.error('Cannot connect to database: ' + error)
         return None
 
     else:
         return connection
 
 def get_city_by_alias(city):
+    """Search for a city by ciudad_alias.
+       This method is called only when search by ciudad_lower return None.
+    """
     connection = connect_database()
     cursor = connection.cursor()
     query = sql.SQL(
@@ -37,6 +43,8 @@ def get_city_by_alias(city):
         return None
 
 def get_city(cursor, city, department=None):
+    """This method searchs for a city by ciudad_lower and if is defined by departamento_lower.
+    """
     city = city.lower().strip()
     if department:
         department = department.lower().strip()
@@ -53,22 +61,29 @@ def get_city(cursor, city, department=None):
     if len(result) > 1:
         return 1
     else:
+        # Search by ciudad_alias
         city_alias = get_city_by_alias(city)
         if city_alias != None:
             return city_alias
         else:
-            logging.critical('City not found in database: ' + city)
+            # Register log with city not found
+            cities_log.critical('City not found in database: ' + city)
             return None
 
 
 def validate_city(city):
+    """This method validate if municipio_entidad exists in a database.
+    """
     if city != None:
         return True, city
     else:
+        # Validate if city exists in ciudad_alias field
         city_alias = get_city_by_alias(city)
         if city_alias != None:
             return False, city_alias
-        else: return True, 90000
+        else: 
+            # If not exist, return foreing key of No existe object
+            return True, 90000
 
 
 def search_city_SECOPI(cursor, oportunity_data):
@@ -81,19 +96,24 @@ def search_city_SECOPI(cursor, oportunity_data):
     depto_entidad = oportunity_data['departamento_entidad'].lower().strip()
 
     if ((municipio_ejecucion == 'no definido') and (municipio_entrega == 'no definido') and (municipio_obtencion == 'no definido')):
+        # Validate if municipio_ejecucion and municipio_entrega and municipio_obtencion are not defined, return ubication of entity
         city = get_city(cursor, municipio_entidad, department=depto_entidad)
         return validate_city(city)
     else:
-        if municipio_ejecucion != 'no definido':         
+        if municipio_ejecucion != 'no definido':
+            # if municipio_ejecucion exist in a database, check if are more than one
+            municipios = municipio_ejecucion.split(';')
+            if len(municipios) > 1:
+                # Get the first element
+                municipio_ejecucion = municipios[0]
             department, city = municipio_ejecucion.split('-')
             city = get_city(cursor, city, department=department)
             if city != None:
+                # If city exist, return city
                 return False, city
             else:
-                city_alias = get_city_by_alias(city)
-                if city_alias != None:
-                    return False, city_alias
-                else: return True, 90000
+                # If not exist, return foreing key of No existe object
+                return True, 90000
 
         elif municipio_entrega != 'no definido':
             city = get_city(cursor, municipio_entrega)
@@ -101,13 +121,16 @@ def search_city_SECOPI(cursor, oportunity_data):
                 # Check if exist more than one city with the same name
                 if city == 1:
                     city = get_city(cursor, municipio_entidad, department=depto_entidad)
-                    return validate_city(city)
-                else: return False, city
+                    # Validate if municipio_entraga is iqual to municipio_entidad, in this case return municipio_entidad
+                    if municipio_entrega == municipio_entidad:
+                        return False, city
+                    else: return validate_city(city)
+                else: 
+                    # If city exist, return city
+                    return False, city
             else:
-                city_alias = get_city_by_alias(city)
-                if city_alias != None:
-                    return False, city_alias
-                else: return True, 90000                
+                # If not exist, return foreing key of No existe object
+                return True, 90000                
 
         elif municipio_obtencion != 'no definido':
             city = get_city(cursor, municipio_obtencion)
@@ -115,13 +138,14 @@ def search_city_SECOPI(cursor, oportunity_data):
                 # Check if exist more than one city with the same name
                 if city == 1:
                     city = get_city(cursor, municipio_entidad, department=depto_entidad)
-                    return validate_city(city)
+                    # Validate if municipio_entraga is iqual to municipio_entidad, in this case return municipio_entidad
+                    if municipio_obtencion == municipio_entidad:
+                        return False, city
+                    else: return validate_city(city)
                 else: return False, city
             else:
-                city_alias = get_city_by_alias(city)
-                if city_alias != None:
-                    return False, city_alias
-                else: return True, 90000                
+                # If not exist, return foreing key of No existe object
+                return True, 90000                
 
 
 def insert_oportunity_secop_i(connection, data):
@@ -183,7 +207,7 @@ def insert_oportunity_secop_i(connection, data):
             connection.commit()
             
         except psycopg2.OperationalError as e:
-            print(error)
+            worker_log.error('Cannot commit query to database: ' + error)
             error = True
             connection.rollback()
         finally:
