@@ -3,7 +3,9 @@ import psycopg2
 from psycopg2 import sql
 from psycopg2 import errors
 import datetime
+import logging
 
+logging.basicConfig(filename='cities.log',level=logging.CRITICAL)
 
 def connect_database():
     try:
@@ -20,11 +22,24 @@ def connect_database():
     else:
         return connection
 
+def get_city_by_alias(city):
+    connection = connect_database()
+    cursor = connection.cursor()
+    query = sql.SQL(
+            "SELECT codigo_ciudad FROM accounts_ciudad WHERE (ciudad_alias = '{}')".format(city))
+    cursor.execute(query)
+    result = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    if len(result) == 1:
+        return result[0][0]
+    else:
+        return None
 
 def get_city(cursor, city, department=None):
-    city = city.lower()
+    city = city.lower().strip()
     if department:
-        department = department.lower()
+        department = department.lower().strip()
         query = sql.SQL(
         "SELECT codigo_ciudad FROM accounts_ciudad WHERE (ciudad_lower = '{}' AND departamento_lower = '{}')".format(city, department))
     else:
@@ -37,37 +52,48 @@ def get_city(cursor, city, department=None):
         return result[0][0]
     if len(result) > 1:
         return 1
-    else:        
-        return None
+    else:
+        city_alias = get_city_by_alias(city)
+        if city_alias != None:
+            return city_alias
+        else:
+            logging.critical('City not found in database: ' + city)
+            return None
 
 
 def validate_city(city):
     if city != None:
         return True, city
     else:
-        return True, ''
+        city_alias = get_city_by_alias(city)
+        if city_alias != None:
+            return False, city_alias
+        else: return True, 90000
 
 
 def search_city_SECOPI(cursor, oportunity_data):
     ''' Search the city based on the existing fields of execution place defined in the process
     '''
-    municipio_ejecucion = oportunity_data['municipios_ejecucion'].lower()
-    municipio_entrega = oportunity_data['municipio_entrega'].lower()
-    municipio_obtencion = oportunity_data['municipio_obtencion'].lower()
-    municipio_entidad = oportunity_data['municipio_entidad'].lower()
-    depto_entidad = oportunity_data['departamento_entidad'].lower()
+    municipio_ejecucion = oportunity_data['municipios_ejecucion'].lower().strip()
+    municipio_entrega = oportunity_data['municipio_entrega'].lower().strip()
+    municipio_obtencion = oportunity_data['municipio_obtencion'].lower().strip()
+    municipio_entidad = oportunity_data['municipio_entidad'].lower().strip()
+    depto_entidad = oportunity_data['departamento_entidad'].lower().strip()
 
     if ((municipio_ejecucion == 'no definido') and (municipio_entrega == 'no definido') and (municipio_obtencion == 'no definido')):
         city = get_city(cursor, municipio_entidad, department=depto_entidad)
         return validate_city(city)
     else:
-        if municipio_ejecucion != 'no definido':            
+        if municipio_ejecucion != 'no definido':         
             department, city = municipio_ejecucion.split('-')
             city = get_city(cursor, city, department=department)
             if city != None:
                 return False, city
             else:
-                return True, ''
+                city_alias = get_city_by_alias(city)
+                if city_alias != None:
+                    return False, city_alias
+                else: return True, 90000
 
         elif municipio_entrega != 'no definido':
             city = get_city(cursor, municipio_entrega)
@@ -77,7 +103,11 @@ def search_city_SECOPI(cursor, oportunity_data):
                     city = get_city(cursor, municipio_entidad, department=depto_entidad)
                     return validate_city(city)
                 else: return False, city
-            else: return True, ''
+            else:
+                city_alias = get_city_by_alias(city)
+                if city_alias != None:
+                    return False, city_alias
+                else: return True, 90000                
 
         elif municipio_obtencion != 'no definido':
             city = get_city(cursor, municipio_obtencion)
@@ -87,7 +117,11 @@ def search_city_SECOPI(cursor, oportunity_data):
                     city = get_city(cursor, municipio_entidad, department=depto_entidad)
                     return validate_city(city)
                 else: return False, city
-            else: return True, ''
+            else:
+                city_alias = get_city_by_alias(city)
+                if city_alias != None:
+                    return False, city_alias
+                else: return True, 90000                
 
 
 def insert_oportunity_secop_i(connection, data):

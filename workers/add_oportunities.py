@@ -15,7 +15,7 @@ import database_connection as db
 def get_request(date):
     # This method consult the API passing the date as aparameter to the query
     response = requests.get('https://www.datos.gov.co/resource/c82b-7jfi.json?fecha_de_cargue_en_el_secop=' +
-                            date + '&estado_del_proceso=Convocado&$limit=3')
+                            date + '&estado_del_proceso=Convocado&$limit=1000')
 
     resp = response.json()
     

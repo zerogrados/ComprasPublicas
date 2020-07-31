@@ -31,6 +31,7 @@ class Ciudad(models.Model):
     departamento = models.CharField(null=False, blank=False, max_length=50)
     ciudad_lower = models.CharField(null=True, blank=True, max_length=50)
     departamento_lower = models.CharField(null=True, blank=True, max_length=50)
+    ciudad_alias = models.CharField(null=True, blank=True, max_length=50)
 
 
 
