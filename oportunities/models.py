@@ -7,7 +7,7 @@ class Oportunidad(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     num_proceso = models.CharField(verbose_name='numero_proceso', max_length=50)
-    cod_unspsc = models.ForeignKey(CodUNSPSC, on_delete=models.SET_NULL, related_name='codigo_principal', null=True, blank=True)
+    cod_unspsc = models.ForeignKey(CodUNSPSC, related_name='codigo_unspsc', on_delete=models.SET_NULL, null=True)
     cod_unspsc_adicionales = models.ManyToManyField(CodUNSPSC, related_name='codigos_adicionales')
     cod_unspsc_familia = models.ForeignKey(CodUNSPSC, on_delete=models.SET_NULL, related_name='codigo_familia', null=True, blank=True)
     cod_unspsc_clase = models.ForeignKey(CodUNSPSC, on_delete=models.SET_NULL, related_name='codigo_clase', null=True, blank=True)
@@ -25,6 +25,7 @@ class Oportunidad(models.Model):
     plazo_ejecucion_cant = models.IntegerField(verbose_name='plazo_ejecucion_cantidad', null=True, blank=True)
     plazo_ejecucion_und = models.CharField(verbose_name='plazo_ejecucion_unidad', max_length=5, null=True, blank=True)
     municipio_ejecucion = models.ForeignKey(Ciudad, verbose_name='municipio_ejecucion', on_delete=models.SET_NULL, null=True, blank=True, related_name='municipio_ejecucion')
+    municipio_ejecucion_adicional = models.ManyToManyField(Ciudad, related_name='municipio_ejecucion_adicional')
     fecha_limite = models.CharField(verbose_name='fecha_limite', max_length=10, null=True, blank=True)
     url_proceso = models.URLField(verbose_name='url_proceso', null=True, blank=True, max_length=255)
     undefined_flag = models.BooleanField(verbose_name='undefined', default=False)

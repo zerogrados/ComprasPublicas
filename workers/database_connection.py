@@ -5,8 +5,7 @@ from psycopg2 import errors
 import datetime
 import logging
 
-cities_log = logging.basicConfig(filename='cities.log',level=logging.CRITICAL)
-worker_log = logging.basicConfig(filename='worker.log',level=logging.ERROR)
+logging.basicConfig(filename='cities_secopi.log',level=logging.ERROR)
 
 def connect_database():
     """Connect to database.
@@ -19,7 +18,7 @@ def connect_database():
                                       database=os.environ.get('DBNAME', None))
 
     except (Exception, psycopg2.Error) as error:
-        worker_log.error('Cannot connect to database: ' + error)
+        logging.error('Cannot connect to database: ' + error)
         return None
 
     else:
@@ -211,7 +210,7 @@ def insert_oportunity_secop_i(connection, data):
             connection.commit()
             
         except psycopg2.OperationalError as e:
-            worker_log.error('Cannot commit query to database: ' + error)
+            logging.error('Cannot commit query to database: ' + error)
             error = True
             connection.rollback()
         finally:
