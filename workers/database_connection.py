@@ -67,8 +67,8 @@ def get_city(cursor, city, department=None):
             return city_alias
         else:
             # Register log with city not found
-            cities_log.critical('City not found in database: ' + city)
-            return None
+            logging.critical('City not found in database: ' + city)
+            return 90000
 
 
 def validate_city(city):
@@ -85,6 +85,14 @@ def validate_city(city):
             # If not exist, return foreing key of No existe object
             return True, 90000
 
+def validate_codunspsc(data):
+    if data['id_objeto_a_contratar'] == '0':
+        data['id_objeto_a_contratar'] = '00000000'
+    if data['id_familia'] == '0':
+        data['id_familia'] = '0000'
+    if data['id_clase'] == '0':
+        data['id_clase'] = '000000'   
+    return data     
 
 def search_city_SECOPI(cursor, oportunity_data):
     ''' Search the city based on the existing fields of execution place defined in the process
@@ -111,11 +119,8 @@ def search_city_SECOPI(cursor, oportunity_data):
             if city != None:
                 # If city exist, return city
                 return False, city
-            else:
-                # If not exist, return foreing key of No existe object
-                return True, 90000
 
-        elif municipio_entrega != 'no definido':
+        if municipio_entrega != 'no definido':
             city = get_city(cursor, municipio_entrega)
             if city != None:
                 # Check if exist more than one city with the same name
@@ -125,14 +130,11 @@ def search_city_SECOPI(cursor, oportunity_data):
                     if municipio_entrega == municipio_entidad:
                         return False, city
                     else: return validate_city(city)
-                else: 
-                    # If city exist, return city
-                    return False, city
-            else:
-                # If not exist, return foreing key of No existe object
-                return True, 90000                
+                elif city != 90000:
+                    # If city is diferent to undefined, return city
+                    return False, city       
 
-        elif municipio_obtencion != 'no definido':
+        if municipio_obtencion != 'no definido':
             city = get_city(cursor, municipio_obtencion)
             if city != None:
                 # Check if exist more than one city with the same name
@@ -143,9 +145,10 @@ def search_city_SECOPI(cursor, oportunity_data):
                         return False, city
                     else: return validate_city(city)
                 else: return False, city
-            else:
-                # If not exist, return foreing key of No existe object
-                return True, 90000                
+        else:
+            # If not exist, return municipio_entidad key
+            city = get_city(cursor, municipio_entidad, department=depto_entidad)
+            return validate_city(city)      
 
 
 def insert_oportunity_secop_i(connection, data):
@@ -160,10 +163,11 @@ def insert_oportunity_secop_i(connection, data):
     cursor.execute(query)
     result = cursor.fetchall()
     if len(result) == 0:
-        # The process doesn't exist in the DB   
+        # The process doesn't exist in the DB                        
         city_entity = get_city(cursor, data['municipio_entidad'], department=data['departamento_entidad'])
         undefined, city_entity = validate_city(city_entity)
-        undefined, city_process = search_city_SECOPI(cursor, data)        
+        undefined, city_process = search_city_SECOPI(cursor, data)
+        data = validate_codunspsc(data)
         query = sql.SQL("""INSERT INTO oportunities_oportunidad (
                                                                 created_at,
                                                                 updated_at,
@@ -193,8 +197,8 @@ def insert_oportunity_secop_i(connection, data):
                                                                           '{}', '{}', '{}', '{}',
                                                                           '{}', '{}', '{}', '{}',
                                                                           '{}', '{}', '{}', '{}', '{}')""".format(
-            datetime.datetime.now(), datetime.datetime.now(), data['numero_de_constancia'], data['id_objeto_a_contratar'], int(data['id_familia'] + '0000'),
-            int(data['id_clase'] + '00'), data['estado_del_proceso'], 1, data['nombre_de_la_entidad'], 
+            datetime.datetime.now(), datetime.datetime.now(), data['numero_de_constancia'], data['id_objeto_a_contratar'], data['id_familia'] + '0000',
+            data['id_clase'] + '00', data['estado_del_proceso'], 1, data['nombre_de_la_entidad'], 
             city_entity, data['nit_de_la_entidad'], data['objeto_a_contratar'],
             data['detalle_del_objeto_a_contratar'], data['cuantia_proceso'], int(data['id_tipo_de_proceso']), 
             data['tipo_de_proceso'], data['fecha_de_cargue_en_el_secop'], -1, '', city_process, '', 

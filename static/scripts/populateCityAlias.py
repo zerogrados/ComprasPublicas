@@ -23,7 +23,7 @@ def connectDB():
 def updateCities(connection):
     error = None
     cursor = connection.cursor()
-    with open('city_alias.json') as jsonfile:
+    with open('../files/city_alias.json') as jsonfile:
         colombia = json.load(jsonfile)
 
     for alias in colombia:

@@ -23,6 +23,9 @@ def updateDB(connection):
     cursor = connection.cursor()
     with open('../files/codigosUNSPSC.csv', newline='\n') as csvfile:
         read_data = csv.reader(csvfile, delimiter=';')
+        query = sql.SQL("INSERT INTO accounts_codunspsc (codigo) VALUES ('{}')".format(00000000))
+        cursor.execute(query)
+        connection.commit()
         for row in read_data:            
             for codigo in row:
                 codigo.strip()
