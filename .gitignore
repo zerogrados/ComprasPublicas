@@ -117,3 +117,6 @@ media/
 *.ini
 
 *colombia_fix.json
+
+# redis db
+*.rdb
