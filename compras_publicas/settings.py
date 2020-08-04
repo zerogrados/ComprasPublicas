@@ -231,8 +231,8 @@ if os.environ.get('ADMIN1_NAME', None):
 
 
 # Celery/Redis conf
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_BROKER_URL ='redis://{}:{}/{}'.format(os.environ.get('REDIS_HOST', None), os.environ.get('REDIS_PORT', None), os.environ.get('REDIS_DB', None))
+CELERY_RESULT_BACKEND = os.environ.get('REDIS_RESULT', None)
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'

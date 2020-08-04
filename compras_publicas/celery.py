@@ -18,9 +18,8 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 # Shceduled tasks
 app.conf.beat_schedule = {
     'demo-15s': {
-        'task': 'oportunities.tasks.async_test',
-        'schedule': 15,
-        'args': (9, 1)
+        'task': 'oportunities.tasks.insertOportunitiesToUpdate',
+        'schedule': 20,
     }
 }
 
