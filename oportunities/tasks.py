@@ -1,32 +1,29 @@
 from __future__ import absolute_import, unicode_literals
 from celery import shared_task
 from .models import Oportunidad
-import redis
-
-import os
-import datetime
+import requests
 import json
+import logging
 
+logging.basicConfig(filename='../update_oportunities.log',level=logging.ERROR)
 
-def setQueueMsg(oportunities):
-    '''This method stablish connection to the queue and set messages
-    '''
-    redis_host = os.environ.get('REDIS_HOST')
-    redis_port = os.environ.get('REDIS_PORT')
-    redis_db = os.environ.get('REDIS_DB')
-    redis_connection = redis.Redis(host=redis_host, port=redis_port, db=redis_db)
-    for oportunity in oportunities:
-        msg = {'datetime': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-               'num_proceso': oportunity[0],
-               'fuente': str(oportunity[1])
-               }
-        redis_connection.set('oportunity-{}'.format(oportunity[0]), json.dumps(msg))
-
+def updateOportunity(oportunity):
+    """This method update oportunity in database.
+    """
+    # Check source of oportunity, 1: SECOPI, 2: SECOPII
+    if oportunity[1] == 1:
+        response = requests.get('https://www.datos.gov.co/resource/c82b-7jfi.json?numero_de_constancia={}'.format(oportunity[0]))
+        resp = response.json()[0]
+        process = Oportunidad.objects.filter(num_proceso=oportunity[0]).update(estado_proceso=resp['estado_del_proceso'])
 
 @shared_task
 def insertOportunitiesToUpdate():
     ''' This method send query to the database to get oportunities ID's for check updates.
-    The IDs get sended to redis queue.
     '''
     oportunities = Oportunidad.objects.filter().values_list('num_proceso', 'fuente')
-    setQueueMsg(oportunities)
+    for oportunity in oportunities:
+        try:
+            updateOportunity(oportunity)
+        except:
+            logging.error('Oportunity cannot be update: ' + oportunity[0])
+            
