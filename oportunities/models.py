@@ -30,6 +30,7 @@ class Oportunidad(models.Model):
     url_proceso = models.URLField(verbose_name='url_proceso', null=True, blank=True, max_length=255)
     undefined_flag = models.BooleanField(verbose_name='undefined', default=False)
 
-
+    def __str__(self):
+        return str(self.num_proceso)
 
 

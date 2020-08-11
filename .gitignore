@@ -120,3 +120,4 @@ media/
 
 # redis db
 *.rdb
+celerybeat-schedule.db

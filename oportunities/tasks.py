@@ -4,6 +4,8 @@ from .models import Oportunidad
 import requests
 import json
 import logging
+import datetime
+from oportunities.utilities.insert_oportunities import get_request
 
 logging.basicConfig(filename='../update_oportunities.log',level=logging.ERROR)
 
@@ -27,3 +29,11 @@ def insertOportunitiesToUpdate():
         except:
             logging.error('Oportunity cannot be update: ' + oportunity[0])
             
+@shared_task
+def insertOportunities():
+    for day in range(3):
+        # Check the API for each day since one month ago
+        date = (datetime.datetime.today() -
+                datetime.timedelta(days=day)).strftime('%m/%d/%Y')
+        
+        get_request(date)
