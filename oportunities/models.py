@@ -18,7 +18,7 @@ class Oportunidad(models.Model):
     nit_entidad = models.CharField(verbose_name='nit_entidad', max_length=20, null=True, blank=True)
     objeto_proceso = models.TextField(verbose_name='objeto_proceso', max_length=500, null=True, blank=True)
     detalle_objeto_proceso = models.TextField(verbose_name='detalle_objeto_proceso', max_length=1000, null=True, blank=True)
-    valor_proceso = models.CharField(verbose_name='valor_proceso', max_length=20, null=True, blank=True)
+    valor_proceso = models.DecimalField(verbose_name='valor_proceso', max_digits=52, decimal_places=2, null=True)
     id_tipo_proceso = models.IntegerField(verbose_name='id_tipo_proceso', null=True, blank=True)
     tipo_proceso = models.CharField(verbose_name='tipo_proceso', max_length=150, null=True, blank=True)
     fecha_publicacion = models.CharField(verbose_name='fecha_publicacion', max_length=10, null=True, blank=True)
