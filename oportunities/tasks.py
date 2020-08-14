@@ -6,13 +6,12 @@ import logging
 import datetime
 from oportunities.utilities.insert_oportunities import get_request
 from accounts.models import Perfil
-from oportunities.utilities.match_oportunities import matchOportunities
+from oportunities.utilities.match_oportunities import matchOportunities, NewOportunitiesInfo
 import redis
 import os
 import json
-from rq import Queue
 from datetime import timedelta
-import time
+
 
 logging.basicConfig(filename='../update_oportunities.log', level=logging.ERROR)
 
@@ -38,17 +37,38 @@ def insertOportunitiesTask():
 
         get_request(date)
 
+
 @shared_task
 def matchOportunitiesTask():
     perfiles = Perfil.objects.all()
     for perfil in perfiles:
         message = matchOportunities(perfil.id)
-        send_message = sendMessageToQueueTask.subtask()
+        send_message = sendMatchEmailTask.subtask()
         send_message.delay(message)
 
+
 @task
-def sendMessageToQueueTask(message):
-    print(message)
+def sendMatchEmailTask(message):
+    mail_data = NewOportunitiesInfo(message)
+    name, email = mail_data.getUserData()
+    oportunities = mail_data.getOportunities()
     
-    
-    
+    from django.core.mail import send_mail
+    from django.conf import settings
+
+    if len(oportunities) > 0:
+        send_mail(
+            'Nuevas oportunidades',
+            'Tienes {} oportunidad(es) de negocio'.format(str(len(oportunities))),
+            settings.EMAIL_HOST_USER,
+            [email],
+            fail_silently=False,
+        )
+    else:
+        send_mail(
+            'Nuevas oportunidades',
+            'No tienes nuevas oportunidades. Aprende a configurar aquí',
+            settings.EMAIL_HOST_USER,
+            [email],
+            fail_silently=False,
+        )

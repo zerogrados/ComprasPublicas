@@ -24,10 +24,10 @@ app.conf.beat_schedule = {
     'insert_oportunities': {
         'task': 'oportunities.tasks.insertOportunitiesTask',
         'schedule': 20,
-    }
+    },
     'match_oportunities': {
             'task': 'oportunities.tasks.matchOportunitiesTask',
-            'schedule': 20,
+            'schedule': 15,
     }
     
 }
