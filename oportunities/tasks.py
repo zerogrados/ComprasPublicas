@@ -7,10 +7,12 @@ import datetime
 from oportunities.utilities.insert_oportunities import get_request
 from accounts.models import Perfil
 from oportunities.utilities.match_oportunities import matchOportunities, NewOportunitiesInfo
+from accounts.models import Usuario
 import redis
 import os
 import json
 from datetime import timedelta
+from django.template import loader
 
 
 logging.basicConfig(filename='../update_oportunities.log', level=logging.ERROR)
@@ -24,8 +26,8 @@ def insertOportunitiesToUpdateTask():
     for oportunity in oportunities:
         try:
             updateOportunity(oportunity)
-        except:
-            logging.error('Oportunity cannot be update: ' + oportunity[0])
+        except Exception as e:
+            logging.error('Oportunity cannot be update: ' + oportunity[0] + ': ' +  e)
 
 
 @shared_task
@@ -55,14 +57,28 @@ def sendMatchEmailTask(message):
     
     from django.core.mail import send_mail
     from django.conf import settings
-
+    from django.contrib.sites.models import Site
+    
     if len(oportunities) > 0:
+        domain = Site.objects.get_current().domain
+        n_oportunities = str(len(oportunities))
+        if len(oportunities) > 3:
+            oportunities = oportunities[:3]
+        html_message = loader.render_to_string('oportunities/new_oportunities.html',
+                                                {
+                                                    'user_name': name,
+                                                    'oportunities': oportunities,
+                                                    'n_oportunities': n_oportunities,
+                                                    'domain': domain
+                                                }
+                                              )
         send_mail(
             'Nuevas oportunidades',
-            'Tienes {} oportunidad(es) de negocio'.format(str(len(oportunities))),
+            '',
             settings.EMAIL_HOST_USER,
             [email],
             fail_silently=False,
+            html_message=html_message,
         )
     else:
         send_mail(

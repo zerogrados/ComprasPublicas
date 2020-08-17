@@ -67,11 +67,20 @@ def validate_city(city):
 def search_city_SECOPI(oportunity_data):
     ''' Search the city based on the existing fields of execution place defined in the process
     '''
-    municipio_ejecucion = oportunity_data['municipios_ejecucion'].lower(
+    try:
+        municipio_ejecucion = oportunity_data['municipios_ejecucion'].lower(
     ).strip()
-    municipio_entrega = oportunity_data['municipio_entrega'].lower().strip()
-    municipio_obtencion = oportunity_data['municipio_obtencion'].lower(
+    except:
+        municipio_ejecucion = 'no definido'
+    try:
+        municipio_entrega = oportunity_data['municipio_entrega'].lower().strip()
+    except:
+        municipio_entrega = 'no definido'
+    try:        
+        municipio_obtencion = oportunity_data['municipio_obtencion'].lower(
     ).strip()
+    except:
+        municipio_obtencion = 'no definido'
     municipio_entidad = oportunity_data['municipio_entidad'].lower().strip()
     depto_entidad = oportunity_data['departamento_entidad'].lower().strip()
 

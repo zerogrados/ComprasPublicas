@@ -1,6 +1,9 @@
 import json
 import requests
 
+# Modelo
+from oportunities.models import Oportunidad
+
 def updateOportunity(oportunity):
     """This method update oportunity in database.
     """
