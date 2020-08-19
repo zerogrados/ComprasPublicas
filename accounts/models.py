@@ -33,6 +33,9 @@ class Ciudad(models.Model):
     departamento_lower = models.CharField(null=True, blank=True, max_length=50)
     ciudad_alias = models.CharField(null=True, blank=True, max_length=50)
 
+    def __str__(self):
+        return self.ciudad + ', ' + self.departamento
+    
 
 
 class Perfil(models.Model):

@@ -64,7 +64,7 @@ def sendMatchEmailTask(message):
         n_oportunities = str(len(oportunities))
         if len(oportunities) > 3:
             oportunities = oportunities[:3]
-        html_message = loader.render_to_string('oportunities/new_oportunities.html',
+        html_message = loader.render_to_string('oportunities/new_oportunities_email.html',
                                                 {
                                                     'user_name': name,
                                                     'oportunities': oportunities,

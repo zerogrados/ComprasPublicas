@@ -3,18 +3,23 @@ from accounts.models import Perfil, Usuario
 from django.db.models import Q
 
 
-def matchOportunities(perfil_id):
+def matchOportunities(perfil_id, user_request=None):
     perfil = Perfil.objects.get(id=perfil_id)
     # Creates the range bidget filter
     budget_range = [perfil.presupuesto_min, perfil.presupuesto_max]
     # Creates cities list filter
     citites = retrieveProfileCitiesIDs(perfil)
     unspsc = retrieveProfileUNSPSCIDs(perfil)
-    oportunities_match = Oportunidad.objects.filter(Q(cod_unspsc__in=unspsc) |
-                                                    Q(cod_unspsc_familia__in=unspsc) | Q(cod_unspsc_clase__in=unspsc), valor_proceso__range=budget_range,
-                                                    municipio_ejecucion__in=citites).values_list('num_proceso', flat=True)
-    oportunities_match = [list(oportunities_match), perfil_id]
 
+    if user_request:
+        oportunities_match = Oportunidad.objects.select_related().filter(Q(cod_unspsc__in=unspsc) |
+                                                        Q(cod_unspsc_familia__in=unspsc) | Q(cod_unspsc_clase__in=unspsc), valor_proceso__range=budget_range,
+                                                        municipio_ejecucion__in=citites).order_by('-fecha_publicacion')
+    else:        
+        oportunities_match = Oportunidad.objects.filter(Q(cod_unspsc__in=unspsc) |
+                                                        Q(cod_unspsc_familia__in=unspsc) | Q(cod_unspsc_clase__in=unspsc), valor_proceso__range=budget_range,
+                                                        municipio_ejecucion__in=citites).values_list('num_proceso', flat=True)
+        oportunities_match = [list(oportunities_match), perfil_id]
     return oportunities_match
 
 
