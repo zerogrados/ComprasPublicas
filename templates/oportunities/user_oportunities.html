@@ -3,23 +3,26 @@
 
 {% block title %}Nuevas oportunidades{% endblock title %}
 
-{% block container %} 
+{% block container %}
     {% for oportunity in oportunities %}
         </br>
         <div style="background-color: #fcfcfc;" class="card text-center w-25 card-custom">
-            <div class="card-header">
+            <div class="card-header" style="margin-top: 1rem;">
                 <h4>
                     {{ oportunity.objeto_proceso }}
                 </h4>
             </div>
             </br>
             <div class="card-body">
-                <h5 style="text-align:left;">
+                <h6 style="text-align:left;">
+                {% if oportunity.fuente == 1 %}SECOP I{% else %} SECOP II{% endif %}
+                </h6>
+                <h6 style="text-align:left;">
                     Proceso: {{ oportunity.num_proceso }}
-                    <span style="float:right; font-weight: bold;">
+                    <span style="float:right; font-weight: bold; font-size: 1.5rem;">
                        COP $ {{ oportunity.valor_proceso|intcomma }}
                     </span>
-                </h5>
+                </h6>
                 <h6 style="text-align:left;">{{ oportunity.entidad }}
                     <span style="float:right;">
                         Fecha de publicación: {{ oportunity.fecha_publicacion }}
@@ -32,7 +35,7 @@
                     </span>
                 </h6>
                 <p style="text-align: justify; font-size: 1.3rem;" class="card-text">{{ oportunity.detalle_objeto_proceso }}</p>
-                <h5 style="text-align:left;">
+                <h6 style="text-align:left;">
                     <span>
                         <i class="fa fa-location-arrow" aria-hidden="true"></i>
                         {{ oportunity.municipio_ejecucion }}
@@ -43,7 +46,7 @@
                              {{ oportunity.plazo_ejecucion }}
                         </span>
                     {% endif%}
-                </h5>
+                </h6>
                 <a style="border-radius: 2rem;" href="{{ oportunity.url_proceso }}" class="btn btn-primary">Ver proceso</a>
             </div>
         </div>
