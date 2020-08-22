@@ -45,9 +45,9 @@ class NewOportunitiesInfo:
         self.user_mail = None
 
     def getUserData(self):
-        user = Perfil.objects.get(id=self.profile_id).usuario
-        self.user = user.first_name
-        self.user_mail = user.email
+        user = Perfil.objects.filter(id=self.profile_id).prefetch_related('usuario').values('usuario__first_name', 'usuario__email')
+        self.user = user[0]['usuario__first_name']
+        self.user_mail = user[0]['usuario__email']
         return self.user, self.user_mail
 
     def getOportunities(self):

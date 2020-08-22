@@ -8,6 +8,8 @@ import requests
 from oportunities.models import Oportunidad
 from accounts.models import Ciudad
 
+from datetime import datetime
+
 # Log
 logging.basicConfig(filename='cities_secopi.log', level=logging.ERROR)
 
@@ -161,6 +163,7 @@ def insert_oportunity_secop_i(data):
             data['municipio_entidad'], department=data['departamento_entidad'])
         undefined, city_entity = validate_city(city_entity)
         undefined, city_process = search_city_SECOPI(data)
+        pub_date = datetime.strptime(data['fecha_de_cargue_en_el_secop'], '%m/%d/%Y')
         data = validate_codunspsc(data)
         oportunity = Oportunidad(num_proceso=data['numero_de_constancia'], cod_unspsc_id=data['id_objeto_a_contratar'],
                                  cod_unspsc_familia_id=data['id_familia'] + '0000', cod_unspsc_clase_id=data['id_clase'] + '00',
@@ -169,8 +172,8 @@ def insert_oportunity_secop_i(data):
                                      'nit_de_la_entidad'], objeto_proceso=data['objeto_a_contratar'],
                                  detalle_objeto_proceso=data['detalle_del_objeto_a_contratar'], valor_proceso=data['cuantia_proceso'],
                                  id_tipo_proceso=int(data['id_tipo_de_proceso']), tipo_proceso=data['tipo_de_proceso'], 
-                                 fecha_publicacion=data['fecha_de_cargue_en_el_secop'], plazo_ejecucion_cant=-1, plazo_ejecucion_und='', 
-                                 municipio_ejecucion_id=city_process.codigo_ciudad, fecha_limite='', url_proceso=data['ruta_proceso_en_secop_i']['url'], 
+                                 fecha_publicacion=pub_date, plazo_ejecucion_cant=-1, plazo_ejecucion_und='', 
+                                 municipio_ejecucion_id=city_process.codigo_ciudad, url_proceso=data['ruta_proceso_en_secop_i']['url'], 
                                  undefined_flag=undefined)
 
         try:

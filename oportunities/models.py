@@ -1,5 +1,6 @@
 from django.db import models
 from accounts.models import CodUNSPSC, Ciudad
+from datetime import datetime
 # Create your models here.
 
 class Oportunidad(models.Model):
@@ -21,16 +22,15 @@ class Oportunidad(models.Model):
     valor_proceso = models.DecimalField(verbose_name='valor_proceso', max_digits=52, decimal_places=2, null=True)
     id_tipo_proceso = models.IntegerField(verbose_name='id_tipo_proceso', null=True, blank=True)
     tipo_proceso = models.CharField(verbose_name='tipo_proceso', max_length=150, null=True, blank=True)
-    fecha_publicacion = models.CharField(verbose_name='fecha_publicacion', max_length=10, null=True, blank=True)
+    fecha_publicacion = models.DateField(verbose_name='fecha_publicacion', null=True, blank=True)
     plazo_ejecucion_cant = models.IntegerField(verbose_name='plazo_ejecucion_cantidad', null=True, blank=True)
     plazo_ejecucion_und = models.CharField(verbose_name='plazo_ejecucion_unidad', max_length=5, null=True, blank=True)
     municipio_ejecucion = models.ForeignKey(Ciudad, verbose_name='municipio_ejecucion', on_delete=models.SET_NULL, null=True, blank=True, related_name='municipio_ejecucion')
     municipio_ejecucion_adicional = models.ManyToManyField(Ciudad, related_name='municipio_ejecucion_adicional')
-    fecha_limite = models.CharField(verbose_name='fecha_limite', max_length=10, null=True, blank=True)
+    fecha_limite = models.DateField(verbose_name='fecha_limite', null=True, blank=True)
     url_proceso = models.URLField(verbose_name='url_proceso', null=True, blank=True, max_length=255)
     undefined_flag = models.BooleanField(verbose_name='undefined', default=False)
 
     def __str__(self):
         return str(self.num_proceso)
-
-
+    
