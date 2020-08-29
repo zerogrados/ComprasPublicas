@@ -35,7 +35,7 @@ def insertOportunitiesTask():
     for day in range(3):
         # Check the API for each day since one month ago
         date = (datetime.datetime.today() -
-                datetime.timedelta(days=day)).strftime('%m/%d/%Y')
+                datetime.timedelta(days=day))
 
         get_request(date)
 

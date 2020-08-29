@@ -175,11 +175,104 @@ def insert_oportunity_secop_i(data):
 
 
 def get_request(date):
-    # This method consult the API passing the date as aparameter to the query
+    # This method consult the SECOPI API passing the date as aparameter to the query
+
     response = requests.get('https://www.datos.gov.co/resource/c82b-7jfi.json?fecha_de_cargue_en_el_secop=' +
-                            date + '&estado_del_proceso=Convocado&$limit=1000')
+                            date.strftime('%m/%d/%Y') + '&estado_del_proceso=Convocado&$limit=1000')
 
     resp = response.json()
 
     for oportunity in resp:
         insert_oportunity_secop_i(oportunity)
+
+    # This method consult the SECOPII API passing the date as aparameter to the query
+
+    response = requests.get('https://www.datos.gov.co/resource/p6dx-8zbt.json?fecha_de_publicacion_del=' + 
+                            date.strftime("%Y-%m-%d") + 'T00:00:00.000&id_estado_del_procedimiento=50&$limit=1000')
+                               
+    resp = response.json()
+
+    for oportunity in resp:
+        insert_oportunity_secop_ii(oportunity)
+
+
+def search_city_entity_secop_ii(city, department):
+    city = city.lower().strip()
+    department = department.lower().strip()
+    if department == 'distrito capital de bogotá':
+        city_entity = get_city(city)
+        return city_entity
+    if (city != 'no definido') and (department != 'no definido'):
+        city_entity = get_city(
+            city, department=department)
+        return city_entity
+    else:
+        return 90000
+    if department != 'no definido':
+        city_entity = get_city(city)
+        return city_entity
+    
+def search_city_process_secop_ii(data):
+    city = data['ciudad_de_la_unidad_de'].lower().strip()
+    city_process = get_city(city)
+    if city != 'no definida':
+        if city_process != 90000:
+            if city_process == 1:
+                # Validate if ciudad_de_la_unidad_de is iqual to ciudad_entidad, in this case return ciudad_entidad key
+                if data['ciudad_de_la_unidad_de'] == data['ciudad_entidad']:
+                    return False, data['city_entity']
+                else:
+                    return True, 90000                    
+            else:
+                # Return ciudad_de_la_unidad_de key
+                return False, city_process
+        else:
+            # City not found
+            return True, city_process
+    else:
+        # If ciudad_de_la_unidad_de is not defined, return city_entity key
+        return True, data['city_entity']
+
+
+def insert_oportunity_secop_ii(data):
+    ''' This method insert the data in the 'oportunities_oportunidad' to create
+        the new oportunity if this doesn't exists yet. (source: SECOP II)
+    '''
+    error = False
+
+    num_proceso = Oportunidad.objects.filter(
+        num_proceso=data['id_del_proceso'])
+    if len(num_proceso) == 0:
+        # The process doesn't exist in the DB
+        city_entity = search_city_entity_secop_ii(
+            data['ciudad_entidad'], data['departamento_entidad'])
+        data['city_entity']= city_entity
+        undefined, city_process = search_city_process_secop_ii(data)
+        pub_date = data['fecha_de_publicacion_del'].split('T')[0]
+        codigo_unspsc = data['codigo_principal_de_categoria'].split('.')[1]
+        try:
+            if data['descripci_n_del_procedimiento']:
+                pass
+        except:
+            data['descripci_n_del_procedimiento'] = None
+
+        oportunity = Oportunidad(num_proceso=data['id_del_proceso'], cod_unspsc_id=codigo_unspsc,
+                                 estado_proceso='Convocado', fuente=2, entidad=data['entidad'],
+                                 municipio_entidad_id=city_entity, nit_entidad=data[
+                                     'nit_entidad'], objeto_proceso=data['nombre_del_procedimiento'],
+                                 detalle_objeto_proceso=data['descripci_n_del_procedimiento'], valor_proceso=data['precio_base'],
+                                 tipo_proceso=data['modalidad_de_contratacion'], fecha_publicacion=pub_date, 
+                                 plazo_ejecucion_cant=data['duracion'], plazo_ejecucion_und=data['unidad_de_duracion'],
+                                 municipio_ejecucion_id=city_process, url_proceso=data['urlproceso']['url'], 
+                                 undefined_flag=undefined)
+
+        try:
+            # Inserts the new row
+            oportunity.save()
+
+        except Exception as e:
+            error = True
+            logging.error('Cannot commit query to database: ' + str(e))
+    else:
+        print('El proceso ' + str(num_proceso) + ' ya existe')
+    return error
