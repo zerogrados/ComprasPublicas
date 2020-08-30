@@ -25,7 +25,7 @@
         float: left;
     }
     .type-oportunity {
-        text-align:left;
+        text-align: right;
     }
     .detail-oportunity {
         text-align: justify; 
@@ -78,16 +78,18 @@
         font-size: 1.3rem;
     }
     .date-pub-oportunity {
-        float: right;
+        float: left;
+        margin-top: 1rem;
     }
     .entity-oportunity {
         text-align: left;
+        display: grid;
     }
     .state-oportunity {
         float: left;
     }
     .type-oportunity {
-        text-align:left;
+        text-align: right;
     }
     .detail-oportunity {
         text-align: justify; 

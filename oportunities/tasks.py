@@ -27,7 +27,7 @@ def insertOportunitiesToUpdateTask():
         try:
             updateOportunity(oportunity)
         except Exception as e:
-            logging.error('Oportunity cannot be update: ' + oportunity[0] + ': ' +  e)
+            logging.error('Oportunity cannot be update: ' + oportunity[0] + ': ' +  str(e))
 
 
 @shared_task

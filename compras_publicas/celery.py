@@ -17,18 +17,18 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 
 # Shceduled tasks
 app.conf.beat_schedule = {
-    #'update_oportunities': {
-    #    'task': 'oportunities.tasks.insertOportunitiesToUpdateTask',
-    #    'schedule': 20,
-    #},
     'insert_oportunities': {
         'task': 'oportunities.tasks.insertOportunitiesTask',
         'schedule': 20,
     },
-    #'match_oportunities': {
-    #        'task': 'oportunities.tasks.matchOportunitiesTask',
-    #        'schedule': 15,
-    #}
+    'update_oportunities': {
+        'task': 'oportunities.tasks.insertOportunitiesToUpdateTask',
+        'schedule': 20,
+    },
+    'match_oportunities': {
+            'task': 'oportunities.tasks.matchOportunitiesTask',
+            'schedule': 15,
+    }
     
 }
 

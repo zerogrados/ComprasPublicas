@@ -14,3 +14,11 @@ def updateOportunity(oportunity):
         resp = response.json()[0]
         process = Oportunidad.objects.filter(num_proceso=oportunity[0]).update(
             estado_proceso=resp['estado_del_proceso'])
+    else:
+        response = requests.get(
+            'https://www.datos.gov.co/resource/p6dx-8zbt.json?id_del_proceso={}'.format(oportunity[0]))
+        resp = response.json()[0]
+        
+        if resp['id_estado_del_procedimiento'] != '50':
+            Oportunidad.objects.filter(num_proceso=oportunity[0]).update(
+                estado_proceso='Celebrado')
