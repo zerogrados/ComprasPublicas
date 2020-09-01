@@ -1,6 +1,6 @@
 from __future__ import absolute_import, unicode_literals
 from celery import shared_task, task
-from .models import Oportunidad
+from .models import Oportunidad, Favorito
 from .utilities.update_oportunities import updateOportunity
 import logging
 import datetime
@@ -89,3 +89,25 @@ def sendMatchEmailTask(message):
             [email],
             fail_silently=False,
         )
+
+
+@task
+def addRemoveFavsTask(userId, processId, state):
+    # State 0: Remove fav
+    # State 1: Add fav
+    if state:
+        newFav = Favorito(
+            usuario=Usuario.objects.get(pk=userId),
+            oportunidad=Oportunidad.objects.get(num_proceso=processId)
+        )
+        try:
+            newFav.save()
+        except Exception as e:
+            logging.warning(
+                'Oportunity {} cannot be saved in favs: {}'.format(processId, e))
+    else:
+        try:
+            oportunityId = Oportunidad.objects.get(num_proceso=processId).id
+            Favorito.objects.get(usuario=userId, oportunidad=oportunityId).delete()
+        except Exception as e:
+            logging.warning('Cannot delete {} oportunity from favs: {}'.format(processId, e))

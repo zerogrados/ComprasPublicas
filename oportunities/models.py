@@ -1,6 +1,8 @@
 from django.db import models
 from accounts.models import CodUNSPSC, Ciudad
 from datetime import datetime
+
+from accounts.models import Usuario
 # Create your models here.
 
 class Oportunidad(models.Model):
@@ -33,4 +35,13 @@ class Oportunidad(models.Model):
 
     def __str__(self):
         return str(self.num_proceso)
+
+
+class Favorito(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='fav_user')
+    oportunidad = models.ForeignKey(Oportunidad, on_delete=models.CASCADE, related_name='fav_oportunity')
+
+    class Meta:
+        unique_together = ('usuario', 'oportunidad',)
     
