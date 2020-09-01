@@ -22,7 +22,7 @@ app.conf.beat_schedule = {
         'schedule': 20,
     },
     'update_oportunities': {
-        'task': 'oportunities.tasks.insertOportunitiesToUpdateTask',
+        'task': 'oportunities.tasks.updateOportunitiesTask',
         'schedule': 20,
     },
     'match_oportunities': {

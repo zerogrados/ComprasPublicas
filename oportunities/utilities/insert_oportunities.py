@@ -178,7 +178,7 @@ def get_request(date):
     # This method consult the SECOPI API passing the date as aparameter to the query
 
     response = requests.get('https://www.datos.gov.co/resource/c82b-7jfi.json?fecha_de_cargue_en_el_secop=' +
-                            date.strftime('%m/%d/%Y') + '&estado_del_proceso=Convocado&$limit=1000')
+                            date.strftime('%m/%d/%Y') + '&estado_del_proceso=Convocado&$limit=20000')
 
     resp = response.json()
 
@@ -188,7 +188,7 @@ def get_request(date):
     # This method consult the SECOPII API passing the date as aparameter to the query
 
     response = requests.get('https://www.datos.gov.co/resource/p6dx-8zbt.json?fecha_de_publicacion_del=' + 
-                            date.strftime("%Y-%m-%d") + 'T00:00:00.000&id_estado_del_procedimiento=50&$limit=1000')
+                            date.strftime("%Y-%m-%d") + 'T00:00:00.000&id_estado_del_procedimiento=50&$limit=20000')
                                
     resp = response.json()
 
@@ -215,7 +215,7 @@ def search_city_entity_secop_ii(city, department):
 def search_city_process_secop_ii(data):
     city = data['ciudad_de_la_unidad_de'].lower().strip()
     
-    if city != 'no definido':
+    if (city != 'no definido') or (city != 'no definida'):
         city_process = get_city(city)
         if city_process != 90000:
             if city_process == 1:
