@@ -202,20 +202,21 @@ def search_city_entity_secop_ii(city, department):
     if department == 'distrito capital de bogotá':
         city_entity = get_city(city)
         return city_entity
+    if department == 'no definido':
+        city_entity = get_city(city)
+        return city_entity
     if (city != 'no definido') and (department != 'no definido'):
         city_entity = get_city(
             city, department=department)
         return city_entity
     else:
         return 90000
-    if department != 'no definido':
-        city_entity = get_city(city)
-        return city_entity
     
 def search_city_process_secop_ii(data):
     city = data['ciudad_de_la_unidad_de'].lower().strip()
-    city_process = get_city(city)
-    if city != 'no definida':
+    
+    if city != 'no definido':
+        city_process = get_city(city)
         if city_process != 90000:
             if city_process == 1:
                 # Validate if ciudad_de_la_unidad_de is iqual to ciudad_entidad, in this case return ciudad_entidad key
@@ -257,7 +258,7 @@ def insert_oportunity_secop_ii(data):
             data['descripci_n_del_procedimiento'] = None
 
         oportunity = Oportunidad(num_proceso=data['id_del_proceso'], cod_unspsc_id=codigo_unspsc,
-                                 estado_proceso='Convocado', fuente=2, entidad=data['entidad'],
+                                 estado_proceso='Publicado', fuente=2, entidad=data['entidad'],
                                  municipio_entidad_id=city_entity, nit_entidad=data[
                                      'nit_entidad'], objeto_proceso=data['nombre_del_procedimiento'],
                                  detalle_objeto_proceso=data['descripci_n_del_procedimiento'], valor_proceso=data['precio_base'],

@@ -20,5 +20,7 @@ def updateOportunity(oportunity):
         resp = response.json()[0]
         
         if resp['id_estado_del_procedimiento'] != '50':
-            Oportunidad.objects.filter(num_proceso=oportunity[0]).update(
-                estado_proceso='Celebrado')
+            if resp['id_estado_del_procedimiento'] == '70':
+                estado = 'Adjudicado'
+                Oportunidad.objects.filter(num_proceso=oportunity[0]).update(
+                    estado_proceso=estado)
