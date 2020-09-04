@@ -7,15 +7,18 @@
     {% for oportunity in oportunities %}
         </br>
         <div style="background-color: #fcfcfc;" class="card text-center w-25 card-custom">
+            <span>
+                <boton id='{{ oportunity.num_proceso }}' href="#" onclick="update_fav('{{ oportunity.num_proceso }}', {% if oportunity.id in favorites %}0{% else %}1{% endif %});" style="float:right; padding: 0;" class='star fa {% if oportunity.id in favorites %}fa-star{% else %}fa-star-o{% endif %} btn'></boton>
+            </span>        
             <div class="card-header" style="margin-top: 1rem;">
-                <h4>
+                <h4>                
                     {{ oportunity.objeto_proceso }}
                 </h4>
             </div>
             </br>
             <div class="card-body">
                 <h6 class="source-oportunity">
-                {% if oportunity.fuente == 1 %}SECOP I{% else %} SECOP II{% endif %}
+                {% if oportunity.fuente == 1 %}SECOP I{% else %}SECOP II{% endif %}
                 </h6>
                 <h6 class="process-oportunity" style="text-align:left;">
                     Proceso: {{ oportunity.num_proceso }}
@@ -26,7 +29,7 @@
                 <h6 class="entity-oportunity">{{ oportunity.entidad }}
                     <span class="date-pub-oportunity">
                         Fecha de publicación: {{ oportunity.fecha_publicacion|date:"d/m/Y" }}
-                    </span>              
+                    </span>
                 </h6>
                 <h6 class="type-oportunity">
                     {{ oportunity.tipo_proceso }}

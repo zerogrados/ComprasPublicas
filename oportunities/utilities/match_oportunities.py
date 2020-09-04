@@ -1,4 +1,4 @@
-from oportunities.models import Oportunidad
+from oportunities.models import Oportunidad, Favorito
 from accounts.models import Perfil, Usuario
 from django.db.models import Q
 
@@ -36,6 +36,9 @@ def retrieveProfileUNSPSCIDs(profile):
         unspsc.append(activity.codigo)
     return unspsc
 
+def retrivefavoritesUser(user_id):
+    favorites = Favorito.objects.filter(usuario_id=user_id).values_list('oportunidad_id', flat=True)
+    return favorites
 
 class NewOportunitiesInfo:
     def __init__(self, initial_data):

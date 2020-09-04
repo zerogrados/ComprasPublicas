@@ -82,5 +82,20 @@
 	<!-- Main -->
 	<script src="{% static 'js/main.js' %}"></script>
 
+	<script>
+		function update_fav(process, state) {
+			if(state == 1) {
+				var update_onclick = "update_fav('".concat(process, "' ,", 0, ")")
+				document.getElementById(process).setAttribute("onClick", update_onclick)
+				document.getElementById(process).setAttribute("class", 'star fa fa-star btn')
+			} else {
+				var update_onclick = "update_fav('".concat(process, "' ,", 1, ")")
+				document.getElementById(process).setAttribute("onClick", update_onclick)
+				document.getElementById(process).setAttribute("class", 'star fa fa-star-o btn')
+			}
+			$.get('fav/'+process+'/'+state, function (data) {
+			});
+		}
+	</script>
 </body>
 </html>

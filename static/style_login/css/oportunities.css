@@ -181,3 +181,16 @@
         font-size: 10px;
     }
 }
+
+.star {
+    font-size: 25px;
+    color:#a2dc4d;
+    display: block;
+}
+
+.heart {
+    font-size: 25px;
+    color: #a2dc4d;
+    display: block;
+}
+
