@@ -3,9 +3,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
 	{% block head_content %}{% endblock %}
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,700,900" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
@@ -51,11 +52,11 @@
 <body style="background-color: #232525">
     {% include "nav.html" %}
 		<div class="d-flex justify-content-center">
-			<div class="wrap-oportunity">
+			<div id='list_oportunities' class="wrap-oportunity">
 				{% block container %}{% endblock%}
 			</div>
 		</div>
-
+	</div>
 	<div class="gototop js-top">
 		<a href="#" class="js-gotop"><i class="icon-arrow-up2"></i></a>
 	</div>
@@ -85,13 +86,13 @@
 	<script>
 		function update_fav(process, state) {
 			if(state == 1) {
-				var update_onclick = "update_fav('".concat(process, "' ,", 0, ")")
-				document.getElementById(process).setAttribute("onClick", update_onclick)
-				document.getElementById(process).setAttribute("class", 'star fa fa-star btn')
+				var update_onclick = "update_fav('".concat(process, "' ,", 0, ")");
+				document.getElementById(process).setAttribute("onClick", update_onclick);
+				document.getElementById(process).setAttribute("class", 'star fa fa-star btn');
 			} else {
-				var update_onclick = "update_fav('".concat(process, "' ,", 1, ")")
-				document.getElementById(process).setAttribute("onClick", update_onclick)
-				document.getElementById(process).setAttribute("class", 'star fa fa-star-o btn')
+				var update_onclick = "update_fav('".concat(process, "' ,", 1, ")");
+				document.getElementById(process).setAttribute("onClick", update_onclick);
+				document.getElementById(process).setAttribute("class", 'star fa fa-star-o btn');
 			}
 			$.get('/oportunities/fav/'+process+'/'+state, function (data) {
 			});

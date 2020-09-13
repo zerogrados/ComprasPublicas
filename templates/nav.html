@@ -1,19 +1,53 @@
-{% load static %}
-<nav class="colorlib-nav" role="navigation">
-    <div class="top-menu">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-2 text-center">
-                    <div id="colorlib-logo"><a href="{% url 'home_page' %}">LICIORION</a></div>
-                </div>
-                <div class="col-md-10 text-right menu-1">
-                    <ul>
-                        {% if user.is_authenticated %}
-                            <li class="btn-cta"><a href="{% url 'cerrar_sesion' %}">Cerrar sesión</a></li>
-                        {% endif %}
-                    </ul>
-                </div>
-            </div>
-        </div>
+{% load static %}		
+<div class="wrapper-sidebar d-flex-sidebar align-items-stretch">
+    <nav id="sidebar" class="active">
+        <div style="margin-top: 0.2rem; color: white;"><a id='colorlib-logo' href="{% url 'home_page' %}" class="logo">L</a></div>
+        <ul class="list-unstyled components mb-5">
+          <li class="active">
+            <a id="oportunities" href="{% url 'user_oportunities' %}"><span class="fa fa-money"></span></a>
+          </li>
+          <li>
+            <a id="favorities" href="{% url 'user_oportunities_favs' %}"><span class="fa fa-star"></span></a>
+          </li>
+          <li>
+            <a id="profile" href="{% url 'enterprise_profile' %}"><span class="fa fa-user"></span></a>
+          </li>
+        </ul>
+    </nav>
+
+    <!-- Page Content  -->
+    <div class="d-flex-sidebar align-items-stretch-sidebar">
+        <nav class="active">
+          <div class="custom-menu">
+
+			<button onclick="update_sliderbar()" style="margin-top: 2rem;" type="button" id="sidebarCollapse" class="btn-sidebar btn-primary">
+				<i class="fa fa-bars"></i>
+				<span class="sr-only"></span>
+			</button>
+          </div>
+        </nav>
     </div>
-</nav>
+
+<script src="{% static 'sliderbar_style/js/jquery.min.js' %}"></script>
+<script src="{% static 'sliderbar_style/js/popper.js' %}"></script>
+<script src="{% static 'sliderbar_style/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'sliderbar_style/js/main.js' %}"></script>
+<script>
+  function update_sliderbar() {
+    var state_sliderbar = document.getElementById("sidebar");
+    if (state_sliderbar.className == '') {
+      document.getElementById("colorlib-logo").innerHTML = 'L';
+      document.getElementById("profile").innerHTML = '<span class="fa fa-user"></span>';
+      document.getElementById("oportunities").innerHTML = '<span class="fa fa-money"></span>';
+      document.getElementById("favorities").innerHTML = '<span class="fa fa-star"></span>';
+      document.getElementById("list_oportunities").style.width = "70%";
+    }
+    else {
+      document.getElementById("colorlib-logo").innerHTML = 'LICIORION';
+      document.getElementById("profile").innerHTML = '<span class="fa fa-user"></span>Perfil';
+      document.getElementById("oportunities").innerHTML = '<span class="fa fa-money"></span>Oportunidades';
+      document.getElementById("favorities").innerHTML = '<span class="fa fa-star"></span>Favoritos';
+      document.getElementById("list_oportunities").style.width = "80%";
+    }
+  }
+</script>

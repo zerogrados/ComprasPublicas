@@ -6,7 +6,7 @@
 {% block container %}
     {% for oportunity in oportunities %}
         </br>
-        <div style="background-color: #fcfcfc;" class="card text-center w-25 card-custom">
+        <div style="background-color: #fcfcfc;" class="card text-center card-custom">
             <span>
                 <boton id='{{ oportunity.num_proceso }}' href="#" onclick="update_fav('{{ oportunity.num_proceso }}', {% if oportunity.id in favorites %}0{% else %}1{% endif %});" style="float:right; padding: 0;" class='star fa {% if oportunity.id in favorites %}fa-star{% else %}fa-star-o{% endif %} btn'></boton>
             </span>        
