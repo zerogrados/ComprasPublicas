@@ -74,12 +74,19 @@ def createUserView(request):
 @login_required
 def updateProfileView(request):
     if request.method == 'GET':
-        form = ProfileForm()
-        return render(request, 'account/profile_info.html', {'form': form})
+        profile = request.user.perfil
+        form = ProfileForm(initial={'nom_empresa': profile.nom_empresa,
+                                    'nit': profile.nit, 'telefono': profile.telefono,
+                                    'ciudad': profile.ciudad, 
+                                    'presupuesto_min': profile.presupuesto_min,
+                                    'presupuesto_max': profile.presupuesto_max,
+                                    'activ_economica': profile.activ_economica
+                                    })
+        return render(request, 'account/profile_info.html', {'form': form, 'profile': profile})
 
     elif request.method == 'POST':
         updateProfile(request)
-        return redirect('welcome_page')
+        return redirect('user_oportunities')
         
 
 
