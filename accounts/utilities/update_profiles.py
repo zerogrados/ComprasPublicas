@@ -15,7 +15,7 @@ def updateProfile(request):
     perfil.presupuesto_min = request.POST['presupuesto_min']
     perfil.presupuesto_max = request.POST['presupuesto_max']
     perfil.activ_economica.set(codUNSPSC)
-    perfil.ciudad.set(ciudades)
+    perfil.ciudades.set(ciudades)
     
     try:
         perfil.save()

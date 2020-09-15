@@ -7,7 +7,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth import views as auth_views
 
 # Models
-from .models import Usuario, Perfil
+from .models import Usuario, Perfil, Ciudad, CodUNSPSC
 
 # Utilities
 import json
@@ -75,14 +75,22 @@ def createUserView(request):
 def updateProfileView(request):
     if request.method == 'GET':
         profile = request.user.perfil
+        ciudades = list(Ciudad.objects.filter(perfil__id=profile.id).values_list('codigo_ciudad', flat=True))
+        activ_economica = list(CodUNSPSC.objects.filter(perfil__id=profile.id).values_list('perfil', flat=True))
+        activ_economica = list(map(lambda activ_economica: activ_economica.codigo, profile.activ_economica.all()))
         form = ProfileForm(initial={'nom_empresa': profile.nom_empresa,
                                     'nit': profile.nit, 'telefono': profile.telefono,
-                                    'ciudad': profile.ciudad, 
+                                    'ciudad': profile.ciudades, 
                                     'presupuesto_min': profile.presupuesto_min,
                                     'presupuesto_max': profile.presupuesto_max,
                                     'activ_economica': profile.activ_economica
                                     })
-        return render(request, 'account/profile_info.html', {'form': form, 'profile': profile})
+        if profile.nom_empresa == None:
+            return render(request, 'account/profile_info.html', {'form': form, 'profile': profile,
+                                                             'ciudades': ciudades, 'activ_economica': activ_economica})
+        else:
+            return render(request, 'account/profile_info_update.html', {'form': form, 'profile': profile,
+                                                             'ciudades': ciudades, 'activ_economica': activ_economica})
 
     elif request.method == 'POST':
         updateProfile(request)

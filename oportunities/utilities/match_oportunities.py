@@ -25,7 +25,7 @@ def matchOportunities(perfil_id, user_request=None):
 
 def retrieveProfileCitiesIDs(profile):
     cities = []
-    for city in profile.ciudad.all():
+    for city in profile.ciudades.all():
         cities.append(city.codigo_ciudad)
     return cities
 

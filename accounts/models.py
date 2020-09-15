@@ -44,9 +44,9 @@ class Perfil(models.Model):
     nom_empresa = models.CharField(max_length=150, null=True)
     telefono = models.CharField(max_length=30, null=True)
     activ_economica = models.ManyToManyField(
-        CodUNSPSC, related_name='actividades_economicas')
+        CodUNSPSC)
     presupuesto_min = models.DecimalField(
         max_digits=52, decimal_places=2, null=True)
     presupuesto_max = models.DecimalField(
         max_digits=52, decimal_places=2, null=True)
-    ciudad = models.ManyToManyField(Ciudad, related_name='ciudades')
+    ciudades = models.ManyToManyField(Ciudad)
