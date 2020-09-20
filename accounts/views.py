@@ -24,7 +24,7 @@ def loginView(request):
                                 password=request.POST['password'],
                                 )
             login(request, user)
-            return redirect('welcome_page')
+            return redirect('user_oportunities')
         except:
             return render(request, 'account/login.html', {'error': 'Usuario o contraseña incorrectos'})
     else:

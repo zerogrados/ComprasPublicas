@@ -84,6 +84,7 @@
 								<li><a href="#pricing" onclick="remove_offcanvas()">Planes y precios</a></li>
 								<li><a href="{% url 'contact_page' %}">Contáctenos</a></li>
 							{% if user.is_authenticated %}
+								<li class="btn-cta"><a href="{% url 'user_oportunities' %}">Oportunidades</a></li>
 								<li class="btn-cta"><a href="{% url 'cerrar_sesion' %}">Cerrar sesión</a></li>
 							{% else %}
 								<li class="btn-cta"><a href="{% url 'registro' %}">Regístrese</a></li>

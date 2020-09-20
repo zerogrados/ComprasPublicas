@@ -12,6 +12,9 @@
           <li>
             <a id="profile" href="{% url 'enterprise_profile' %}"><span class="fa fa-user"></span></a>
           </li>
+          <li>
+            <a id="signout" href="{% url 'cerrar_sesion' %}"><span class="fa fa-sign-out"></span></a>
+          </li>          
         </ul>
     </nav>
 
@@ -40,6 +43,7 @@
       document.getElementById("profile").innerHTML = '<span class="fa fa-user"></span>';
       document.getElementById("oportunities").innerHTML = '<span class="fa fa-money"></span>';
       document.getElementById("favorities").innerHTML = '<span class="fa fa-star"></span>';
+      document.getElementById("signout").innerHTML = '<span class="fa fa-sign-out"></span>';
       document.getElementById("list_oportunities").style.width = "70%";
     }
     else {
@@ -47,6 +51,7 @@
       document.getElementById("profile").innerHTML = '<span class="fa fa-user"></span>Perfil';
       document.getElementById("oportunities").innerHTML = '<span class="fa fa-money"></span>Oportunidades';
       document.getElementById("favorities").innerHTML = '<span class="fa fa-star"></span>Favoritos';
+      document.getElementById("signout").innerHTML = '<span class="fa fa-sign-out"></span>Salir';
       document.getElementById("list_oportunities").style.width = "80%";
     }
   }
