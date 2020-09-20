@@ -60,8 +60,9 @@ def sendMatchEmailTask(message):
     from django.conf import settings
     from django.contrib.sites.models import Site
 
+    domain = Site.objects.get_current().domain
+
     if len(oportunities) > 0:
-        domain = Site.objects.get_current().domain
         n_oportunities = str(len(oportunities))
         if len(oportunities) > 3:
             oportunities = oportunities[:3]
@@ -82,12 +83,19 @@ def sendMatchEmailTask(message):
             html_message=html_message,
         )
     else:
+        html_message = loader.render_to_string('oportunities/new_oportunities_email_empty.html',
+                                               {
+                                                   'user_name': name,
+                                                   'domain': domain
+                                               }
+                                               )        
         send_mail(
             'Nuevas oportunidades',
-            'No tienes nuevas oportunidades. Aprende a configurar aquí',
+            '',
             settings.EMAIL_HOST_USER,
             [email],
             fail_silently=False,
+            html_message=html_message,
         )
 
 
