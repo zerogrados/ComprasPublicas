@@ -3,13 +3,13 @@
     <nav id="sidebar" class="active">
         <div style='margin-top: 0.2rem; color: white;'><a style='font-family: "Montserrat", Arial, sans-serif;' id='colorlib-logo' href="{% url 'home_page' %}" class="logo">L</a></div>
         <ul class="list-unstyled components mb-5">
-          <li class="active">
+          <li id='li_oportunities'>
             <a id="oportunities" href="{% url 'user_oportunities' %}"><span class="fa fa-money"></span></a>
           </li>
-          <li>
+          <li id='li_favorities'>
             <a id="favorities" href="{% url 'user_oportunities_favs' %}"><span class="fa fa-star"></span></a>
           </li>
-          <li>
+          <li id='li_profile'>
             <a id="profile" href="{% url 'enterprise_profile' %}"><span class="fa fa-user"></span></a>
           </li>
           <li>
@@ -22,14 +22,14 @@
     <div class="d-flex-sidebar align-items-stretch-sidebar">
         <nav class="active">
           <div class="custom-menu">
-
-			<button onclick="update_sliderbar()" style="margin-top: 2rem;" type="button" id="sidebarCollapse" class="btn-sidebar btn-primary">
-				<i class="fa fa-bars"></i>
-				<span class="sr-only"></span>
-			</button>
+            <button onclick="update_sliderbar()" style="margin-top: 2rem;" type="button" id="sidebarCollapse" class="btn-sidebar btn-primary">
+              <i class="fa fa-bars"></i>
+              <span class="sr-only"></span>
+            </button>
           </div>
         </nav>
     </div>
+
 
 <script src="{% static 'sliderbar_style/js/jquery.min.js' %}"></script>
 <script src="{% static 'sliderbar_style/js/popper.js' %}"></script>
@@ -54,5 +54,21 @@
       document.getElementById("signout").innerHTML = '<span class="fa fa-sign-out"></span>Salir';
       document.getElementById("list_oportunities").style.width = "80%";
     }
+  }
+</script>
+<script>
+
+  var path = window.location.pathname;
+  if (path == '/oportunities/me/') {
+    $("li").removeClass("active");
+    document.getElementById('li_oportunities').classList.add("active");
+  }
+  if (path == '/oportunities/favs/') {
+    $("li").removeClass("active");
+    document.getElementById('li_favorities').classList.add("active");
+  }
+  if (path == '/accounts/profile_form/') {
+    $("li").removeClass("active");
+    document.getElementById('li_profile').classList.add("active");
   }
 </script>

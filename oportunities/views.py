@@ -12,7 +12,7 @@ from oportunities.utilities.match_oportunities import matchOportunities, retrive
 def user_oportunities(request):
     oportunities = matchOportunities(request.user.perfil.id, True)
     favorites = retrivefavoritesUser(request.user.perfil.id)
-    if len(favorites) != 0:
+    if len(oportunities) != 0:
         return render(request, 'oportunities/user_oportunities.html', 
                         {'oportunities': oportunities, 'favorites': favorites})
     else:

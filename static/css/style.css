@@ -1539,7 +1539,7 @@ input[type="text"] {
         color: #fff; }
     #sidebar ul li.active > a {
       background: transparent;
-      color: #a2dc4d; }
+      color: #fff; }
   @media (max-width: 991.98px) {
     #sidebar {
       min-width: 80px;
