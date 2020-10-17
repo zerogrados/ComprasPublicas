@@ -1,8 +1,4 @@
-import json
 import requests
-
-# Modelo
-from oportunities.models import Oportunidad
 
 
 def updateOportunity(oportunity):
@@ -13,7 +9,7 @@ def updateOportunity(oportunity):
         response = requests.get(
             'https://www.datos.gov.co/resource/c82b-7jfi.json?numero_de_constancia={}'.format(oportunity['num_proceso']))
         resp = response.json()[0]
-        process = oportunity.update(estado_proceso=resp['estado_del_proceso'])
+        oportunity.update(estado_proceso=resp['estado_del_proceso'])
 
     else:
         response = requests.get(

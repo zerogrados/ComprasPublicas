@@ -11,7 +11,7 @@ from accounts.models import Usuario
 class Plan(models.Model):
     """Plan model."""
     name = models.CharField(null=False, blank=False, max_length=100)
-    months = models.IntegerField(null=False, blank=False)
+    days = models.IntegerField(null=False, blank=False)
     price = models.IntegerField(null=False, blank=False)
     offer = models.IntegerField(null=True, blank=True)
     

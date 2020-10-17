@@ -1,5 +1,5 @@
 from oportunities.models import Oportunidad, Favorito
-from accounts.models import Perfil, Usuario
+from accounts.models import Perfil
 from django.db.models import Q
 
 

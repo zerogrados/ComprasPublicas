@@ -3,7 +3,6 @@ from django.shortcuts import render, redirect
 from django.db.utils import IntegrityError
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth import views as auth_views
 
 # Models
@@ -32,6 +31,13 @@ def loginView(request):
 
 
 def createUserView(request):
+    try:
+        request.session['suscription'] = request.GET['suscription']
+    except:
+        pass
+    if request.user.is_authenticated:
+        return redirect('suscription_validate')
+
     if request.method == "POST":
         form = UserForm(request.POST)
         if form.is_valid():
@@ -51,7 +57,7 @@ def createUserView(request):
             user.save()
             profile = Perfil(usuario=user)
             profile.save()
-            #import pdb; pdb.set_trace()
+            
             new_user = authenticate(email=form.cleaned_data['email'],
                                     password=form.cleaned_data['password1'],
                                     )
@@ -59,7 +65,6 @@ def createUserView(request):
             return redirect('enterprise_profile')
 
         else:
-
             try:
                 if form.errors['celular']:
                     form.errors['celular'] = 'Ingrese un teléfono valido (Ej: 3001112233)'
@@ -94,7 +99,7 @@ def updateProfileView(request):
 
     elif request.method == 'POST':
         updateProfile(request)
-        return redirect('user_oportunities')
+        return redirect('suscription_validate')
         
 
 

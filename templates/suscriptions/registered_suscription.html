@@ -72,12 +72,9 @@
 						</div>
 						<div class="col-md-10 text-right menu-1">
 							<ul>
-								{% if user.is_authenticated %}
+								<li><a href="{% url 'home_page' %}">Inicio</a></li>
+								<li class="btn-cta"><a href="{% url 'user_oportunities' %}">Oportunidades</a></li>
 								<li class="btn-cta"><a href="{% url 'cerrar_sesion' %}">Cerrar sesión</a></li>
-							    {% else %}
-								<!--<li class="btn-cta"><a href="{% url 'registro' %}">Regístrese</a></li>-->
-								<li class="btn-cta"><a href="{% url 'login' %}">Ingresar</a></li>
-							    {% endif %}
 							</ul>
 						</div>
 					</div>
@@ -89,19 +86,22 @@
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2 text-center">
 						<div class="intro">
-							<h1>Gracias por contactarnos</h1>
-							<p><span><a href="{% url 'home_page' %}">Inicio</a></span> / <span>Contáctenos</span></p>
+							<h1>Bienvenido a LICIORION</h1>
+							<p><span><a href="{% url 'home_page' %}">Inicio</a></span> / <span>Bienvenido</span></p>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<div id="colorlib-services">
+		<div id="services">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-8 col-md-offset-2 text-center colorlib-heading animate-box">						
-						<p>En cualquier momento nuestro equipo dará respuesta a su inquietud.</p><br />						
+					<div class="col-md-8 col-md-offset-2 text-center colorlib-heading animate-box">
+						<h2>{{ title }}</h2>
+						<p>{{ message }}</p><br />
+						<span>{{ detail }}</span><span
+							style="font-weight: bold;">LICIORION</span>
 					</div>
 				</div>
 
