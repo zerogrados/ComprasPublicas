@@ -28,8 +28,11 @@ app.conf.beat_schedule = {
     'match_oportunities': {
             'task': 'oportunities.tasks.matchOportunitiesTask',
             'schedule': 15,
+    },
+    'delete_oportunities': {
+            'task': 'oportunities.tasks.deleteOportunitiesTask',
+            'schedule': 15,
     }
-    
 }
 
 # Load task modules from all registered Django app configs.
