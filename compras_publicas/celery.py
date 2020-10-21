@@ -32,6 +32,10 @@ app.conf.beat_schedule = {
     'delete_oportunities': {
             'task': 'oportunities.tasks.deleteOportunitiesTask',
             'schedule': 15,
+    },
+    'update_subscriptions': {
+            'task': 'subscriptions.tasks.updateSubscriptionsTask',
+            'schedule': 15,
     }
 }
 

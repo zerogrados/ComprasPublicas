@@ -7,20 +7,20 @@ from django.shortcuts import render
 from oportunities.utilities.match_oportunities import matchOportunities, retrivefavoritesUser
 
 # Models
-from suscriptions.models import Suscription
+from subscriptions.models import Subscription
 
 # Create your views here.
 
 def user_oportunities(request):
-    suscriptions = Suscription.objects.filter(user=request.user.id, active=True).values("plan")
+    subscriptions = Subscription.objects.filter(user=request.user.id, active=True).values("plan")
     # Check if the user has had plans
-    if suscriptions.count() == 0:
+    if subscriptions.count() == 0:
         title = "Usted no cuenta con una suscripción activa"
         message = "Adquiera el plan que más se ajuste a las necesidades de su empresa."
         detail = "Estaremos atentos a sus inquietudes y sugerencias."
         return render(
             request,
-            "suscriptions/registered_suscription_plans.html",
+            "subscriptions/registered_subscription_plans.html",
             {"title": title, "message": message, "detail": detail},
         )
 
@@ -34,15 +34,15 @@ def user_oportunities(request):
         
 
 def user_oportunities_favs(request):
-    suscriptions = Suscription.objects.filter(user=request.user.id, active=True).values("plan")
+    subscriptions = Subscription.objects.filter(user=request.user.id, active=True).values("plan")
     # Check if the user has had plans
-    if suscriptions.count() == 0:
+    if subscriptions.count() == 0:
         title = "Usted no cuenta con una suscripción activa"
         message = "Adquiera el plan que más se ajuste a las necesidades de su empresa."
         detail = "Estaremos atentos a sus inquietudes y sugerencias."
         return render(
             request,
-            "suscriptions/registered_suscription_plans.html",
+            "subscriptions/registered_subscription_plans.html",
             {"title": title, "message": message, "detail": detail},
         )
 

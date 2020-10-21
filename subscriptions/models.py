@@ -1,4 +1,4 @@
-"""Suscription models."""
+"""Subscription models."""
 
 # Django
 from django.db import models
@@ -18,8 +18,8 @@ class Plan(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-class Suscription(models.Model):
-    """Suscription model."""
+class Subscription(models.Model):
+    """Subscription model."""
     plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
     user = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     purchase_date = models.DateTimeField(auto_now=True)

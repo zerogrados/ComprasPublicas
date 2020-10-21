@@ -32,11 +32,11 @@ def loginView(request):
 
 def createUserView(request):
     try:
-        request.session['suscription'] = request.GET['suscription']
+        request.session['subscription'] = request.GET['subscription']
     except:
         pass
     if request.user.is_authenticated:
-        return redirect('suscription_validate')
+        return redirect('subscription_validate')
 
     if request.method == "POST":
         form = UserForm(request.POST)
@@ -99,7 +99,7 @@ def updateProfileView(request):
 
     elif request.method == 'POST':
         updateProfile(request)
-        return redirect('suscription_validate')
+        return redirect('subscription_validate')
         
 
 

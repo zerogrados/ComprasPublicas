@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     # 'landingPage',
     'accounts',
     'oportunities',
-    'suscriptions',
+    'subscriptions',
 ]
 
 MIDDLEWARE = [
