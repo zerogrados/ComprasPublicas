@@ -144,7 +144,7 @@ def deleteOportunitiesTask():
     date = datetime.datetime.today() - datetime.timedelta(days=31)
     oportunities_fav = Favorito.objects.all().values_list("oportunidad_id", flat=True)
     Oportunidad.objects.filter(
-        Q(estado_proceso="Adjudicado") | Q(estado_proceso="Celebrado")
+        (Q(estado_proceso="Adjudicado") | Q(estado_proceso="Celebrado"))
         & ~Q(id__in=oportunities_fav),
         fecha_publicacion__lte=date,
     ).delete()
