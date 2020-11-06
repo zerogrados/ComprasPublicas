@@ -1,10 +1,15 @@
-from django.urls import include, path
-from django.conf.urls import url
-from . import views
+"""Accounts urls."""
+
+# Django
+from django.urls import path
 from django.contrib.auth import views as auth_views
+from django.views.decorators.csrf import csrf_exempt
+
+# Views
+from . import views
 
 urlpatterns = [
-    path('signup_form/', views.createUserView, name='registro'),
+    path('signup_form/', csrf_exempt(views.createUserView), name='registro'),
     path('login/', views.loginView, name='login'),
     path('logout_/', views.logoutView, name='cerrar_sesion'),
     path(

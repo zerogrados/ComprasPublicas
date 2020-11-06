@@ -8,8 +8,7 @@ from django.contrib.auth import views as auth_views
 # Models
 from .models import Usuario, Perfil, Ciudad, CodUNSPSC
 
-# Utilities
-import json
+# Utils
 from .utilities.update_profiles import updateProfile
 
 # Forms

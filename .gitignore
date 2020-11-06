@@ -121,3 +121,6 @@ media/
 # redis db
 *.rdb
 celerybeat-schedule.db
+
+# Custom
+mercadopago

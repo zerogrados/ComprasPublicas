@@ -1,6 +1,6 @@
 
 # Django
-from django.urls import include, path
+from django.urls import path
 # Views
 from oportunities.views import user_oportunities, user_oportunities_favs, addRemoveFavs
 

@@ -26,6 +26,7 @@ class Subscription(models.Model):
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
     active = models.BooleanField(default=False)
+    payment_detail = models.JSONField(null=True)
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

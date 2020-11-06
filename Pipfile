@@ -13,8 +13,8 @@ django-phonenumber-field = {extras = ["phonenumbers"], version = "*"}
 phonenumbers = "*"
 python-memcached = "*"
 gunicorn = "*"
-celery = "*"
 redis = "*"
+celery = "~=4.4.7"
 
 [requires]
 python_version = "3.8"
