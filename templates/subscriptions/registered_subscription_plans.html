@@ -128,14 +128,48 @@
 								<div class="pricing">
 									<h2 class="pricing-heading">6 meses</h2>
 									<div class="price"><sup class="currency">$</sup>260.000<small><br></small></div>
-									<p><a href="{% url 'subscription_validate' %}?subscription=3" class="btn btn-primary">Seleccionar plan</a></p>
+										<script src='https://checkout.epayco.co/checkout.js' 
+											data-epayco-key='5c907b023b58f10bf33a6fead35a8e3b' 
+											class='epayco-button' 
+											data-epayco-amount='260000' 
+											data-epayco-tax='0'
+											data-epayco-tax-base='260000'
+											data-epayco-name='Plan 6 meses' 
+											data-epayco-description='Plan 6 meses' 
+											data-epayco-currency='cop'    
+											data-epayco-country='CO' 
+											data-epayco-test='true' 
+											data-epayco-external='true' 
+											data-epayco-extra1='3'
+											data-epayco-extra2={{ user_id }}											
+											data-epayco-response='http://127.0.0.1:8000/subscriptions/payment/'  
+											data-epayco-confirmation='http://127.0.0.1:8000/subscriptions/payment/' 
+											data-epayco-button='https://369969691f476073508a-60bf0867add971908d4f26a64519c2aa.ssl.cf5.rackcdn.com/btns/boton_carro_de_compras_epayco5.png'> 
+										</script> 
 								</div>
 							</div>
 							<div class="col-md-4 text-center animate-box">
 								<div class="pricing">
 									<h2 class="pricing-heading">12 meses</h2>
 									<div class="price"><sup class="currency">$</sup>380.000<small><br></small></div>
-									<p><a href="{% url 'subscription_validate' %}?subscription=4" class="btn btn-primary">Seleccionar plan</a></p>
+										<script src='https://checkout.epayco.co/checkout.js' 
+											data-epayco-key='5c907b023b58f10bf33a6fead35a8e3b' 
+											class='epayco-button' 
+											data-epayco-amount='360000' 
+											data-epayco-tax='0'
+											data-epayco-tax-base='360000'
+											data-epayco-name='Plan 12 meses' 
+											data-epayco-description='Plan 12 meses' 
+											data-epayco-currency='cop'    
+											data-epayco-country='CO' 
+											data-epayco-test='true' 
+											data-epayco-external='true'
+											data-epayco-extra1='4'
+											data-epayco-extra2={{ user_id }}											
+											data-epayco-response='http://127.0.0.1:8000/subscriptions/payment/'  
+											data-epayco-confirmation='http://127.0.0.1:8000/subscriptions/payment/' 
+											data-epayco-button='https://369969691f476073508a-60bf0867add971908d4f26a64519c2aa.ssl.cf5.rackcdn.com/btns/boton_carro_de_compras_epayco5.png'> 
+										</script> 
 								</div>
 							</div>
 						</div><br />

@@ -253,7 +253,7 @@ def payment_response(request):
                     )
                 else:
                     return redirect("user_oportunities")
-        if request.session["x_response"] == 'Rechazada':
+        if request.POST['x_response'] == 'Rechazada':
             title = "Su transacción ha sido rechazada"
             message = "Por favor revise su pago he intentelo de nuevo. Estamos atentos a sus inquietudes y sugerencias."
             detail = ""
@@ -262,6 +262,15 @@ def payment_response(request):
                 "subscriptions/registered_subscription_response.html",
                 {"title": title, "message": message, "detail": detail},
             )
+        if request.POST['x_response'] == 'Pendiente':
+            title = "Su transacción se encuentra en estado pendiente"
+            message = "Por favor revise su pago he intentelo de nuevo. Estamos atentos a sus inquietudes y sugerencias."
+            detail = ""
+            return render(
+                request,
+                "subscriptions/registered_subscription_response.html",
+                {"title": title, "message": message, "detail": detail},
+            )            
     else:
         if request.user.is_authenticated:
             pass
