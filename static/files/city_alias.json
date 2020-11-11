@@ -242,5 +242,34 @@
     {
         "id": "2010",
         "title": "anza"
+    },
+    {
+        "id": "28025",
+        "title": "santiago de tolú"
+    },
+    {
+        "id": "2102",
+        "title": "santafé de antioquia"
+    },
+    {
+        "id": "30007",
+        "title": "guadalajara de buga"
+    },
+    {
+        "id": "10023",
+        "title": "paez/belalcazar"
+    },
+    {
+        "id": "21036",
+        "title": "magüi"
+    },
+    {
+        "id": "22020",
+        "title": "la playa de belen"
+    },
+    {
+        "id": "1001",
+        "title": "el encanto"
     }
+    
 ]
