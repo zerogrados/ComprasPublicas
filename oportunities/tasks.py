@@ -9,6 +9,7 @@ from django.template import loader
 # Models
 from accounts.models import Usuario, Perfil
 from .models import Oportunidad, Favorito
+from subscriptions.models import Subscription
 
 # Utils
 import datetime
@@ -54,11 +55,13 @@ def insertOportunitiesTask():
 
 @shared_task
 def matchOportunitiesTask():
+    suscriptions = Subscription.objects.filter(active=True).values_list('user', flat=True)
     perfiles = Perfil.objects.all()
     for perfil in perfiles:
-        message = matchOportunities(perfil.id)
-        send_message = sendMatchEmailTask.subtask()
-        send_message.delay(message)
+        if perfil.id in suscriptions:
+            message = matchOportunities(perfil.id)
+            send_message = sendMatchEmailTask.subtask()
+            send_message.delay(message)
 
 
 @task

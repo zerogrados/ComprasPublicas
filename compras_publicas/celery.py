@@ -3,6 +3,7 @@ from __future__ import absolute_import, unicode_literals
 import os
 from django.conf import settings
 from celery import Celery
+from celery.schedules import crontab
 
 # set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'compras_publicas.settings')
@@ -17,26 +18,26 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 
 # Shceduled tasks
 app.conf.beat_schedule = {
-    'insert_oportunities': {
-        'task': 'oportunities.tasks.insertOportunitiesTask',
-        'schedule': 20,
+    'update_subscriptions': {
+        'task': 'subscriptions.tasks.updateSubscriptionsTask',
+        'schedule': crontab(minute=00, hour=1),
+    },    
+    'delete_oportunities': {
+        'task': 'oportunities.tasks.deleteOportunitiesTask',
+        'schedule': crontab(minute=30, hour=1),
     },
     'update_oportunities': {
         'task': 'oportunities.tasks.updateOportunitiesTask',
-        'schedule': 20,
+        'schedule': crontab(minute=00, hour=2),
+    },    
+    'insert_oportunities': {
+        'task': 'oportunities.tasks.insertOportunitiesTask',
+        'schedule': crontab(minute=30, hour=2),
     },
     'match_oportunities': {
-            'task': 'oportunities.tasks.matchOportunitiesTask',
-            'schedule': 15,
+        'task': 'oportunities.tasks.matchOportunitiesTask',
+        'schedule': crontab(minute=00, hour=7),
     },
-    'delete_oportunities': {
-            'task': 'oportunities.tasks.deleteOportunitiesTask',
-            'schedule': 15,
-    },
-    'update_subscriptions': {
-            'task': 'subscriptions.tasks.updateSubscriptionsTask',
-            'schedule': 15,
-    }
 }
 
 # Load task modules from all registered Django app configs.
