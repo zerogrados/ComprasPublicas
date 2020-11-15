@@ -15,6 +15,7 @@ python-memcached = "*"
 gunicorn = "*"
 redis = "*"
 celery = "~=4.4.7"
+flower = "*"
 
 [requires]
 python_version = "3.8"
