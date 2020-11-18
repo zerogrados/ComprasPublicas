@@ -22,7 +22,7 @@ server {
 
     # Puerto y nombre
     listen 80;
-    server_name ec2-3-92-212-32.compute-1.amazonaws.com;
+    server_name ec2-3-92-212-32.compute-1.amazonaws.com liciorion.com www.liciorion.com;
 
     # Logs de nginx
     access_log /home/ubuntu/logs/nginx.access.log;
@@ -47,3 +47,19 @@ server {
 
 }
 """
+
+# Agregar Google Analytics a Django
+
+- https://bhoey.com/blog/adding-google-analytics-to-django-templates/
+
+# How to host GoDaddy domain with AWS EC2
+http://sandny.com/2019/11/23/host-godaddy-domain-with-aws-ec2/
+
+# Validar DNS de un dominio
+https://www.ultratools.com/tools/dnsLookupResult
+
+# Crear y descargar certificados SSL
+https://app.zerossl.com
+
+# Configurar SSL https en NGINX AWS EC2
+https://medium.com/datadriveninvestor/nginx-server-ssl-setup-on-aws-ec2-linux-b6bb454e2ef2

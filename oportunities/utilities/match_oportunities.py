@@ -23,7 +23,7 @@ def matchOportunities(perfil_id, user_request=None):
     else:        
         oportunities_match = Oportunidad.objects.filter(Q(cod_unspsc__in=unspsc) |
                                                         Q(cod_unspsc_familia__in=unspsc) | Q(cod_unspsc_clase__in=unspsc), valor_proceso__range=budget_range,
-                                                        municipio_ejecucion__in=citites).values_list('num_proceso', flat=True)
+                                                        municipio_ejecucion__in=citites).values_list('num_proceso', flat=True).order_by('-fecha_publicacion')
         oportunities_match = oportunities_match.filter(~(Q(estado_proceso="Adjudicado") & Q(fecha_publicacion__lte=date) & Q(id__in=oportunities_fav)))
         oportunities_match = oportunities_match.filter(~(Q(estado_proceso="Celebrado") & Q(fecha_publicacion__lte=date) & Q(id__in=oportunities_fav)))                                                        
         oportunities_match = [list(oportunities_match), perfil_id]

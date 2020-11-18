@@ -23,6 +23,7 @@
 	<meta name="twitter:url" content="" />
 	<meta name="twitter:card" content="" />
 
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
 	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,700,900" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
 
@@ -118,8 +119,8 @@
 											data-epayco-external='true' 
 											data-epayco-extra1='2'
 											data-epayco-extra2={{ user_id }}
-											data-epayco-response='http://127.0.0.1:8000/subscriptions/payment/'  
-											data-epayco-confirmation='http://127.0.0.1:8000/subscriptions/payment/' 
+											data-epayco-response="http://{{ domain }}/subscriptions/payment/"
+											data-epayco-confirmation="http://{{ domain }}/subscriptions/payment/"
 											data-epayco-button='https://369969691f476073508a-60bf0867add971908d4f26a64519c2aa.ssl.cf5.rackcdn.com/btns/boton_carro_de_compras_epayco5.png'> 
 										</script>
 								</div>
@@ -142,8 +143,8 @@
 											data-epayco-external='true' 
 											data-epayco-extra1='3'
 											data-epayco-extra2={{ user_id }}											
-											data-epayco-response='http://127.0.0.1:8000/subscriptions/payment/'  
-											data-epayco-confirmation='http://127.0.0.1:8000/subscriptions/payment/' 
+											data-epayco-response="http://{{ domain }}/subscriptions/payment/"
+											data-epayco-confirmation="http://{{ domain }}/subscriptions/payment/"
 											data-epayco-button='https://369969691f476073508a-60bf0867add971908d4f26a64519c2aa.ssl.cf5.rackcdn.com/btns/boton_carro_de_compras_epayco5.png'> 
 										</script> 
 								</div>
@@ -166,8 +167,8 @@
 											data-epayco-external='true'
 											data-epayco-extra1='4'
 											data-epayco-extra2={{ user_id }}											
-											data-epayco-response='http://127.0.0.1:8000/subscriptions/payment/'  
-											data-epayco-confirmation='http://127.0.0.1:8000/subscriptions/payment/' 
+											data-epayco-response="http://{{ domain }}/subscriptions/payment/"
+											data-epayco-confirmation="http://{{ domain }}/subscriptions/payment/"
 											data-epayco-button='https://369969691f476073508a-60bf0867add971908d4f26a64519c2aa.ssl.cf5.rackcdn.com/btns/boton_carro_de_compras_epayco5.png'> 
 										</script> 
 								</div>
