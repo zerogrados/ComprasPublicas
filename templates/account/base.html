@@ -26,6 +26,15 @@
     <link rel="stylesheet" type="text/css" href="{% static 'style_login/css/main.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'style_login/css/progress-wizard.min.css' %}">
     <!--===============================================================================================-->
+	{% if GA_KEY %}
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id={{ GA_KEY }}"></script>
+		<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', '{{ GA_KEY }}');
+		</script>
+	{% endif %}
 </head>
   
 <body style="background-color: #232525">
@@ -53,15 +62,6 @@
     </script>
     <!--===============================================================================================-->
     <script src="{% static 'style_login/js/main.js' %}"></script>
-	{% if GA_KEY %}
-		<script async="" src="https://www.googletagmanager.com/gtag/js?id={{ GA_KEY }}"></script>
-		<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-		gtag('config', '{{ GA_KEY }}');
-		</script>
-	{% endif %}
 </body>
 
 </html>

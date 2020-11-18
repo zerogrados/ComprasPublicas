@@ -55,7 +55,15 @@
 	<!--[if lt IE 9]>
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
-
+	{% if GA_KEY %}
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id={{ GA_KEY }}"></script>
+		<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', '{{ GA_KEY }}');
+		</script>
+	{% endif %}
 </head>
 
 <body>
@@ -196,15 +204,6 @@
 	<script src="{% static 'js/jquery.countTo.js' %}"></script>
 	<!-- Main -->
 	<script src="{% static 'js/main.js' %}"></script>
-	{% if GA_KEY %}
-		<script async="" src="https://www.googletagmanager.com/gtag/js?id={{ GA_KEY }}"></script>
-		<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-		gtag('config', '{{ GA_KEY }}');
-		</script>
-	{% endif %}
 </body>
 
 </html>

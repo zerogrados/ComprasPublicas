@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 # Models
 from .models import Subscription, Plan
+from django.contrib.sites.models import Site
 
 # Utils
 import datetime
@@ -28,6 +29,7 @@ def create_plan(user_id, plan_id, start_date, payment_detail=None):
 def subscription_validate(request):
     user_id = request.user.id
     free_plan_id = 1
+    domain = Site.objects.get_current().domain
     if "subscription" in request.session:
         plan_id = int(request.session["subscription"])
         if plan_id == 0:
@@ -45,7 +47,7 @@ def subscription_validate(request):
                 return render(
                     request,
                     "subscriptions/registered_subscription_plans.html",
-                    {"title": title, "message": message, "detail": detail, "user_id": user_id},
+                    {"title": title, "message": message, "detail": detail, "user_id": user_id, "domain": domain,},
                 )
             # Check if require activate other plan and plan free
             else:
@@ -56,7 +58,7 @@ def subscription_validate(request):
                 return render(
                     request,
                     "subscriptions/registered_subscription_plans.html",
-                    {"title": title, "message": message, "detail": detail, "user_id": user_id},
+                    {"title": title, "message": message, "detail": detail, "user_id": user_id, "domain": domain,},
                 )                
         else:
             subscriptions = (
@@ -76,7 +78,7 @@ def subscription_validate(request):
                     return render(
                         request,
                         "subscriptions/registered_subscription_plans.html",
-                        {"title": title, "message": message, "detail": detail, "user_id": user_id},
+                        {"title": title, "message": message, "detail": detail, "user_id": user_id, "domain": domain,},
                     )
                 else:
                     # Create a new plan if the user has no active plans and has already used the free plan
@@ -87,7 +89,7 @@ def subscription_validate(request):
                     return render(
                         request,
                         "subscriptions/registered_subscription_plans.html",
-                        {"title": title, "message": message, "detail": detail, "user_id": user_id},
+                        {"title": title, "message": message, "detail": detail, "user_id": user_id, "domain": domain,},
                     )
             else:
                 free_subscription = Subscription.objects.filter(
@@ -100,7 +102,7 @@ def subscription_validate(request):
                     return render(
                         request,
                         "subscriptions/registered_subscription_plans.html",
-                        {"title": title, "message": message, "detail": detail},
+                        {"title": title, "message": message, "detail": detail, "domain": domain,},
                     )
                 else:
                     title = "Su suscripción gratuita ya ha sido activada"
@@ -109,7 +111,7 @@ def subscription_validate(request):
                     return render(
                         request,
                         "subscriptions/registered_subscription_plans.html",
-                        {"title": title, "message": message, "detail": detail, "user_id": user_id},
+                        {"title": title, "message": message, "detail": detail, "user_id": user_id, "domain": domain,},
                     )
     else:
         subscriptions = Subscription.objects.filter(user=user_id, active=True).values(
@@ -125,7 +127,7 @@ def subscription_validate(request):
             return render(
                 request,
                 "subscriptions/registered_subscription_plans.html",
-                {"title": title, "message": message, "detail": detail, "user_id": user_id},
+                {"title": title, "message": message, "detail": detail, "user_id": user_id, "domain": domain,},
             )
         else:
             return redirect("user_oportunities")
@@ -224,7 +226,7 @@ def payment_response(request):
                             return render(
                                 request,
                                 "subscriptions/registered_subscription_plans.html",
-                                {"title": title, "message": message, "detail": detail},
+                                {"title": title, "message": message, "detail": detail, "domain": domain,},
                             )
                         else:
                             title = "Su suscripción gratuita ya ha sido activada"
@@ -249,7 +251,7 @@ def payment_response(request):
                     return render(
                         request,
                         "subscriptions/registered_subscription_plans.html",
-                        {"title": title, "message": message, "detail": detail},
+                        {"title": title, "message": message, "detail": detail, "domain": domain,},
                     )
                 else:
                     return redirect("user_oportunities")

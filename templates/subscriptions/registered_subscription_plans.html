@@ -56,7 +56,15 @@
 	<!--[if lt IE 9]>
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
-
+	{% if GA_KEY %}
+		<script async="" src="https://www.googletagmanager.com/gtag/js?id={{ GA_KEY }}"></script>
+		<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', '{{ GA_KEY }}');
+		</script>
+	{% endif %}
 </head>
 
 <body>
@@ -119,8 +127,8 @@
 											data-epayco-external='true' 
 											data-epayco-extra1='2'
 											data-epayco-extra2={{ user_id }}
-											data-epayco-response="http://{{ domain }}/subscriptions/payment/"
-											data-epayco-confirmation="http://{{ domain }}/subscriptions/payment/"
+											data-epayco-response="https://{{ domain }}/subscriptions/payment/"
+											data-epayco-confirmation="https://{{ domain }}/subscriptions/payment/"
 											data-epayco-button='https://369969691f476073508a-60bf0867add971908d4f26a64519c2aa.ssl.cf5.rackcdn.com/btns/boton_carro_de_compras_epayco5.png'> 
 										</script>
 								</div>
@@ -143,8 +151,8 @@
 											data-epayco-external='true' 
 											data-epayco-extra1='3'
 											data-epayco-extra2={{ user_id }}											
-											data-epayco-response="http://{{ domain }}/subscriptions/payment/"
-											data-epayco-confirmation="http://{{ domain }}/subscriptions/payment/"
+											data-epayco-response="https://{{ domain }}/subscriptions/payment/"
+											data-epayco-confirmation="https://{{ domain }}/subscriptions/payment/"
 											data-epayco-button='https://369969691f476073508a-60bf0867add971908d4f26a64519c2aa.ssl.cf5.rackcdn.com/btns/boton_carro_de_compras_epayco5.png'> 
 										</script> 
 								</div>
@@ -167,8 +175,8 @@
 											data-epayco-external='true'
 											data-epayco-extra1='4'
 											data-epayco-extra2={{ user_id }}											
-											data-epayco-response="http://{{ domain }}/subscriptions/payment/"
-											data-epayco-confirmation="http://{{ domain }}/subscriptions/payment/"
+											data-epayco-response="https://{{ domain }}/subscriptions/payment/"
+											data-epayco-confirmation="https://{{ domain }}/subscriptions/payment/"
 											data-epayco-button='https://369969691f476073508a-60bf0867add971908d4f26a64519c2aa.ssl.cf5.rackcdn.com/btns/boton_carro_de_compras_epayco5.png'> 
 										</script> 
 								</div>
@@ -268,15 +276,6 @@
 	<script src="{% static 'js/jquery.countTo.js' %}"></script>
 	<!-- Main -->
 	<script src="{% static 'js/main.js' %}"></script>
-	{% if GA_KEY %}
-		<script async="" src="https://www.googletagmanager.com/gtag/js?id={{ GA_KEY }}"></script>
-		<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-		gtag('config', '{{ GA_KEY }}');
-		</script>
-	{% endif %}
 </body>
 
 </html>

@@ -9,6 +9,7 @@ from oportunities.utilities.match_oportunities import matchOportunities, retrive
 
 # Models
 from subscriptions.models import Subscription
+from django.contrib.sites.models import Site
 
 # Create your views here.
 
@@ -17,6 +18,7 @@ def user_oportunities(request):
     subscriptions = Subscription.objects.filter(user=request.user.id, active=True).values("plan")
     # Check if the user has had plans
     if subscriptions.count() == 0:
+        domain = Site.objects.get_current().domain
         title = "Usted no cuenta con una suscripción activa"
         message = "Adquiera el plan que más se ajuste a las necesidades de su empresa."
         detail = "Estamos atentos a sus inquietudes y sugerencias."
@@ -24,7 +26,7 @@ def user_oportunities(request):
         return render(
             request,
             "subscriptions/registered_subscription_plans.html",
-            {"title": title, "message": message, "detail": detail, "user_id": user_id},
+            {"title": title, "message": message, "detail": detail, "user_id": user_id, "domain": domain,},
         )
 
     oportunities = matchOportunities(request.user.perfil.id, True)
@@ -40,6 +42,7 @@ def user_oportunities_favs(request):
     subscriptions = Subscription.objects.filter(user=request.user.id, active=True).values("plan")
     # Check if the user has had plans
     if subscriptions.count() == 0:
+        domain = Site.objects.get_current().domain
         title = "Usted no cuenta con una suscripción activa"
         message = "Adquiera el plan que más se ajuste a las necesidades de su empresa."
         detail = "Estamos atentos a sus inquietudes y sugerencias."
@@ -47,7 +50,7 @@ def user_oportunities_favs(request):
         return render(
             request,
             "subscriptions/registered_subscription_plans.html",
-            {"title": title, "message": message, "detail": detail, "user_id": user_id},
+            {"title": title, "message": message, "detail": detail, "user_id": user_id, "domain": domain,},
         )
 
     oportunities = matchOportunities(request.user.perfil.id, True)
