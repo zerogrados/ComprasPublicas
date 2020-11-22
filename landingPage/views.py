@@ -17,27 +17,22 @@ def createEmailBody(name, user_email, body_text):
                 <span style="font-weight: bold">MENSAJE: </span><span>%s</span> <br />                
             </body>
         </html>""" % (name, user_email, body_text)
-
     return body_mail
 
 
 def sendEmail(body_mail, subject):
     try:
-        # Connect to SMTP server provider
-        email_server = smtplib.SMTP(os.environ.get(
-            'EMAIL_HOST', None), os.environ.get('EMAIL_PORT', None))
-        email_server.ehlo()
-        email_server.starttls()
-        email_server.ehlo()
-        email_server.login(os.environ.get('EMAIL_HOST_USER', None),
-                           os.environ.get('EMAIL_HOST_PASSWORD', None))
-        # Build email structure
-        msg = MIMEText(body_mail, 'html')
-        msg['Subject'] = subject
+        from django.core.mail import send_mail
+        from django.conf import settings
 
-        # Send email
-        email_server.sendmail(os.environ.get('EMAIL_HOST_USER', None), os.environ.get('EMAIL_CONTACT_USER', None),
-                              msg.as_string().encode("ascii", errors="ignore"))
+        send_mail(
+            "Formulario de contactenos",
+            "",
+            settings.EMAIL_HOST_USER,
+            ['info.liciorion@gmail.com'],
+            fail_silently=False,
+            html_message=body_mail,
+        )
 
         return True
 

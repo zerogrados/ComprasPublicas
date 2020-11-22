@@ -16,17 +16,32 @@ user = ubuntu
 """
 
 ## NGINX
+Instalar Nginx
+- sudo apt install nginx
+
 ComprasPublicas.com
 """
 server {
 
     # Puerto y nombre
     listen 80;
-    server_name ec2-3-92-212-32.compute-1.amazonaws.com liciorion.com www.liciorion.com;
+    server_name ec2-18-212-251-201.compute-1.amazonaws.com liciorion.com www.liciorion.com;
+    return 301 https://liciorion.com$request_uri;
+}
+server {
+    listen 443 ssl;
+
+    server_name ec2-18-212-251-201.compute-1.amazonaws.com liciorion.com www.liciorion.com;
+
+    # Certificate
+    ssl_certificate /etc/nginx/ssl/certificate.crt;
+
+    # Private Key
+    ssl_certificate_key /etc/nginx/ssl/private.key;
 
     # Logs de nginx
-    access_log /home/ubuntu/logs/nginx.access.log;
-    error_log  /home/ubuntu/logs/nginx.error.log;
+    access_log /home/ubuntu/nginx/logs/nginx.access.log;
+    error_log  /home/ubuntu/nginx/logs/nginx.error.log;
 
     # Ficheros estáticos
     location /static/ {
@@ -42,11 +57,12 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_read_timeout 1m;
         proxy_connect_timeout 1m;
-        proxy_pass http://172.31.91.199:8000;
+        proxy_pass http://172.31.26.20:8000;
     }
-
 }
 """
+# Instalar Redis server
+- https://www.osradar.com/install-redis-ubuntu-20-04/
 
 # Agregar Google Analytics a Django
 
