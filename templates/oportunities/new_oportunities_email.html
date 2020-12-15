@@ -163,35 +163,40 @@
 														style="font-size: 15px; line-height: 1.5; word-break: break-word; text-align: left; font-family: 'Monserrat', Arial, sans-serif; mso-line-height-alt: 23px; margin: 0;">
 														<span style="color: #FFFFFF; font-size: 15px;">Nuestro sistema encontró {{ n_oportunities }} oportunidad(es) relacionadas con su perfil empresarial. 
                                                         A continuación, le mostramos algunas de ellas.</span></p>
-                                                    </br>                                                        
+													<p
+														style="font-size: 14px; line-height: 1.5; word-break: break-word; text-align: left; font-family: 'Monserrat', Arial, sans-serif; mso-line-height-alt: 21px; margin: 0;">
+														 </p>
+                                                    <p
+														style="font-size: 14px; line-height: 1.5; word-break: break-word; text-align: left; font-family: 'Monserrat', Arial, sans-serif; mso-line-height-alt: 21px; margin: 0;">
+														 </p>                                                 
                                                     {% for oportunity in oportunities %}
                                                         <p
 														style="font-size: 15px; line-height: 1.5; word-break: break-word; text-align: left; font-family: 'Monserrat', Arial, sans-serif; mso-line-height-alt: 23px; margin: 0;">
 														<span style="color: #FFFFFF; font-size: 15px;">{{ oportunity.0 }}</span></p>
                                                         <p
 														style="font-size: 15px; line-height: 1.5; word-break: break-word; text-align: left; font-family: 'Monserrat', Arial, sans-serif; mso-line-height-alt: 23px; margin: 0;">
-														<span style="color: #FFFFFF; font-size: 15px;">{{ oportunity.1 }}</span></p>
+														<span style="color: #FFFFFF; font-size: 15px;">Entidad: {{ oportunity.1 }}</span></p>
                                                         <p
 														style="font-size: 15px; line-height: 1.5; word-break: break-word; text-align: left; font-family: 'Monserrat', Arial, sans-serif; mso-line-height-alt: 23px; margin: 0;">
-														<span style="color: #FFFFFF; font-size: 15px;">$ {{ oportunity.2 }}</span></p>
+														<span style="color: #FFFFFF; font-size: 15px;">Valor del contrato: $ {{ oportunity.2 }}</span></p>
                                                         <p
 														style="font-size: 15px; line-height: 1.5; word-break: break-word; text-align: left; font-family: 'Monserrat', Arial, sans-serif; mso-line-height-alt: 23px; margin: 0;">
 														<span
 															style="font-size: 16px; margin: 0; line-height: 2; word-break: break-word; mso-line-height-alt: 32px;"><strong>
 																<a style="text-decoration: none; color: #a2dc4d;" href="https://{{ domain }}">Ver más</a></strong></span>
                                                         </p>
-                                                        <p
+														<p
+														style="font-size: 14px; line-height: 1.5; word-break: break-word; text-align: left; font-family: 'Monserrat', Arial, sans-serif; mso-line-height-alt: 21px; margin: 0;">
+														 </p>
+														<p
                                                             style="font-size: 14px; line-height: 1.5; word-break: break-word; text-align: left; font-family: 'Monserrat', Arial, sans-serif; mso-line-height-alt: 21px; margin: 0;">
                                                         </p>
                                                         <p
                                                             style="font-size: 15px; line-height: 1.5; word-break: break-word; text-align: left; font-family: 'Monserrat', Arial, sans-serif; mso-line-height-alt: 23px; margin: 0;">
-                                                            <span style="color: #FFFFFF; font-size: 15px;">------------------------------------------</span>
+                                                            <span style="color: #FFFFFF; font-size: 15px;"></span>
                                                         </p>                                                        
                                                     {% endfor %}
 													<p
-														style="font-size: 14px; line-height: 1.5; word-break: break-word; text-align: left; font-family: 'Monserrat', Arial, sans-serif; mso-line-height-alt: 21px; margin: 0;">
-														 </p>
-                                                    <p
 														style="font-size: 14px; line-height: 1.5; word-break: break-word; text-align: left; font-family: 'Monserrat', Arial, sans-serif; mso-line-height-alt: 21px; margin: 0;">
 														 </p>
 													<p
